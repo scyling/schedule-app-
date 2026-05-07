@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -19,14 +19,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:28px;background:#1a1a2e;border-radius:0 0 18px 18px;z-index:100}
 .phone-screen{width:100%;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
 @media(max-width:430px){.phone-frame{width:100vw;height:100vh;border-radius:0;border:none;top:0;left:0;transform:none;box-shadow:none}.phone-notch{display:none}}
-.status-bar{height:44px;background:var(--card);display:flex;align-items:center;justify-content:space-between;padding:8px 20px 0;flex-shrink:0}
-.status-bar .time{font-size:15px;font-weight:600;color:var(--text)}
+.status-bar{height:44px;background:var(--card);display:flex;align-items:center;justify-content:flex-end;padding:8px 20px 0;flex-shrink:0}
 .status-bar .icons{display:flex;gap:6px;align-items:center}
 .status-bar .icons svg{width:16px;height:16px;fill:var(--text)}
 .pages{flex:1;overflow:hidden;position:relative}
 .page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(var(--nav-h)+12px);display:none;flex-direction:column;background:var(--bg);-webkit-overflow-scrolling:touch}
 .page.active{display:flex}
-.bottom-nav{height:var(--nav-h);background:var(--card);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:8px;flex-shrink:0;box-shadow:0 -4px 20px rgba(0,0,0,0.06)}
+.bottom-nav{height:var(--nav-h);background:var(--card);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:8px;flex-shrink:0;box-shadow:0 -4px 20px rgba(0,0,0,0.06);position:relative;z-index:30}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:2px 0}
 .nav-item .nav-icon{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:12px;transition:all 0.2s}
 .nav-item.active .nav-icon{background:var(--primary-light)}
@@ -34,14 +33,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .nav-item.active .nav-icon svg{fill:var(--primary)}
 .nav-item .nav-label{font-size:10px;color:var(--text3);transition:color 0.2s}
 .nav-item.active .nav-label{color:var(--primary);font-weight:600}
-.fab{position:absolute;bottom:calc(var(--nav-h)+20px);right:20px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));box-shadow:0 6px 20px rgba(108,99,255,0.4);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:50;transition:transform 0.15s,box-shadow 0.15s}
-.fab:active{transform:scale(0.93)}
-.fab svg{width:26px;height:26px;fill:#fff}
+/* FAB - 新设计 */
+.fab{position:absolute;bottom:calc(var(--nav-h)+18px);right:18px;width:48px;height:48px;border-radius:50%;background:var(--card);box-shadow:0 4px 16px rgba(108,99,255,0.28),0 1px 4px rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:50;transition:transform 0.15s,box-shadow 0.15s;border:2px solid var(--primary)}
+.fab:hover{box-shadow:0 6px 20px rgba(108,99,255,0.36),0 2px 6px rgba(0,0,0,0.1)}
+.fab:active{transform:scale(0.92)}
+.fab svg{width:22px;height:22px;fill:none;stroke:var(--primary);stroke-width:2.5;stroke-linecap:round}
 .section{padding:16px 16px 0}
 .section-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
 .section-title .more{font-size:12px;color:var(--primary);font-weight:400;cursor:pointer}
 /* HOME */
-.home-top{background:linear-gradient(160deg,var(--primary) 0%,#8B7BFF 100%);padding:16px 20px 24px;position:relative;overflow:hidden}
+.home-top{background:linear-gradient(160deg,var(--primary) 0%,#8B7BFF 100%);padding:16px 20px 24px;position:relative;overflow:hidden;flex-shrink:0}
 .home-top::after{content:'';position:absolute;right:-30px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.08)}
 .home-greeting{color:rgba(255,255,255,0.85);font-size:13px;margin-bottom:4px}
 .home-date{color:#fff;font-size:22px;font-weight:700;margin-bottom:14px}
@@ -49,26 +50,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .home-stat-card{flex:1;background:rgba(255,255,255,0.18);border-radius:var(--radius-sm);padding:10px 12px;backdrop-filter:blur(8px)}
 .home-stat-card .val{color:#fff;font-size:22px;font-weight:700;line-height:1}
 .home-stat-card .lbl{color:rgba(255,255,255,0.8);font-size:11px;margin-top:3px}
-.today-progress{margin:0 16px 14px;background:var(--card);border-radius:var(--radius-sm);padding:12px 16px;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
-.progress-header{display:flex;justify-content:space-between;margin-bottom:8px}
-.progress-label{font-size:13px;color:var(--text2)}
-.progress-val{font-size:13px;font-weight:700;color:var(--primary)}
-.progress-bar-bg{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),#8B7BFF);border-radius:3px;transition:width 0.6s ease}
-.quick-actions{display:flex;gap:10px;padding:0 16px 16px}
-.quick-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;background:var(--card);border-radius:var(--radius-sm);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.05);transition:transform 0.15s}
+.today-progress{margin:0 16px 14px;background:var(--card);border-radius:var(--radius-sm);padding:12px 16px;box-shadow:0 2px 10px rgba(0,0,0,0.04);flex-shrink:0}
+/* quick-actions 固定在顶部，滚动时吸顶 */
+.quick-actions{display:flex;gap:10px;padding:0 16px 14px;position:sticky;top:0;z-index:10;background:var(--bg);flex-shrink:0;padding-top:10px}
+.quick-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px 10px;background:var(--card);border-radius:var(--radius-sm);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.05);transition:transform 0.15s;border:1px solid var(--border)}
 .quick-btn:active{transform:scale(0.96)}
-.quick-btn .icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center}
-.quick-btn .icon svg{width:20px;height:20px;fill:#fff}
-.quick-btn .lbl{font-size:11px;color:var(--text2);font-weight:500}
-.timeline-item{display:flex;align-items:flex-start;gap:12px;padding:0 16px;margin-bottom:14px}
-.timeline-left{display:flex;flex-direction:column;align-items:center;width:52px;flex-shrink:0}
-.timeline-time{font-size:12px;font-weight:600;color:var(--text2);text-align:center}
-.timeline-dot{width:10px;height:10px;border-radius:50%;margin:5px 0}
-.timeline-line{width:2px;flex:1;background:var(--border);min-height:20px}
-.timeline-right{flex:1;background:var(--card);border-radius:var(--radius-sm);padding:10px 12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
-.timeline-right .t-title{font-size:13px;font-weight:600;color:var(--text)}
-.timeline-right .t-desc{font-size:11px;color:var(--text3);margin-top:3px}
+.quick-btn .icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.quick-btn .icon svg{width:18px;height:18px;fill:#fff}
+.quick-btn .lbl{font-size:10px;color:var(--text2);font-weight:500}
 /* SCHEDULE ITEM */
 .schedule-item{display:flex;align-items:stretch;background:var(--card);border-radius:var(--radius-sm);margin-bottom:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);overflow:hidden;cursor:pointer;transition:transform 0.15s}
 .schedule-item:active{transform:scale(0.98)}
@@ -82,8 +71,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .schedule-item .repeat-tag{font-size:10px;padding:2px 6px;border-radius:20px;background:#FFF7E6;color:var(--warning);font-weight:500}
 .schedule-item .right-part{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding:12px 14px;gap:6px}
 .schedule-item .status-dot{width:8px;height:8px;border-radius:50%}
+.schedule-item .del-btn{font-size:16px;cursor:pointer;padding:4px 6px;border-radius:8px;transition:background 0.15s;opacity:0.6}
+.schedule-item .del-btn:active{background:var(--danger);opacity:1}
 /* CALENDAR */
-.calendar-header{background:var(--card);padding:14px 20px 10px;border-bottom:1px solid var(--border)}
+.calendar-header{background:var(--card);padding:14px 20px 10px;border-bottom:1px solid var(--border);flex-shrink:0}
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .cal-nav .month{font-size:18px;font-weight:700;color:var(--text)}
 .cal-nav-btn{width:32px;height:32px;border-radius:50%;background:var(--primary-light);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -142,8 +133,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .priority-btn.p3.active{border-color:var(--danger);background:#FFF0F0;color:var(--danger)}
 .btn-save{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-size:15px;font-weight:700;border:none;border-radius:var(--radius-sm);cursor:pointer;margin-top:8px;letter-spacing:1px;transition:opacity 0.15s}
 .btn-save:active{opacity:0.85}
+.btn-row{display:flex;gap:10px}
+.btn-row .btn-save{flex:1;margin-top:0}
+.btn-cancel{flex:1;padding:14px;background:var(--bg);color:var(--text2);font-size:15px;font-weight:700;border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;letter-spacing:1px;transition:opacity 0.15s}
+.btn-cancel:active{opacity:0.8}
 /* TIME PAGE */
-.time-header{background:linear-gradient(135deg,#FF6584,#FF8E53);padding:16px 20px 20px;color:#fff}
+.time-header{background:linear-gradient(135deg,#FF6584,#FF8E53);padding:16px 20px 20px;color:#fff;flex-shrink:0}
 .time-header .title{font-size:20px;font-weight:700;margin-bottom:4px}
 .time-header .sub{font-size:13px;opacity:0.85}
 .pomodoro-card{margin:-20px 16px 0;background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:center;position:relative;z-index:2}
@@ -155,9 +150,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .pomo-btn.primary{background:var(--primary);color:#fff}
 .pomo-btn.secondary{background:var(--bg);color:var(--text2)}
 .pomo-btn:active{opacity:0.8}
-.pomo-mode-tabs{display:flex;background:var(--bg);border-radius:8px;padding:3px;margin:10px 0 0}
-.pomo-mode-tab{flex:1;text-align:center;padding:5px 6px;font-size:11px;color:var(--text2);border-radius:6px;cursor:pointer;transition:all 0.15s}
+/* 模式选择 + 自定义时长 */
+.pomo-mode-tabs{display:flex;background:var(--bg);border-radius:8px;padding:3px;margin:10px 0 0;position:relative}
+.pomo-mode-tab{flex:1;text-align:center;padding:5px 6px;font-size:11px;color:var(--text2);border-radius:6px;cursor:pointer;transition:all 0.15s;z-index:1}
 .pomo-mode-tab.active{background:var(--card);color:var(--primary);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+/* 自定义时长输入 */
+.custom-duration-row{display:flex;align-items:center;gap:8px;margin:8px 0 0;padding:8px 12px;background:var(--bg);border-radius:8px}
+.custom-duration-row label{font-size:12px;color:var(--text2);white-space:nowrap}
+.custom-duration-row input{width:60px;padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;background:#fff;font-size:13px;color:var(--text);outline:none;text-align:center;font-family:inherit}
+.custom-duration-row input:focus{border-color:var(--accent)}
+.custom-duration-row .unit{font-size:12px;color:var(--text2)}
+.set-duration-btn{padding:4px 12px;border-radius:6px;border:none;background:var(--accent);color:#fff;font-size:11px;font-weight:600;cursor:pointer}
 .time-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px}
 .time-stat-card{background:var(--card);border-radius:var(--radius-sm);padding:14px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
 .time-stat-card .ts-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
@@ -177,11 +180,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .task-priority.high{background:#FFF0F0;color:var(--danger)}
 .task-priority.med{background:#FFF7E6;color:var(--warning)}
 .task-priority.low{background:#EDFAF5;color:var(--success)}
+.task-del{font-size:16px;cursor:pointer;padding:4px 6px;border-radius:8px;opacity:0.5;transition:opacity 0.15s}
+.task-del:active{background:var(--danger);opacity:1}
 /* FITNESS PAGE */
-.fitness-header{background:linear-gradient(135deg,#43D19E,#0096C7);padding:16px 20px 28px;color:#fff}
+.fitness-header{background:linear-gradient(135deg,#43D19E,#0096C7);padding:16px 20px 28px;color:#fff;flex-shrink:0}
 .fitness-header .title{font-size:20px;font-weight:700;margin-bottom:4px}
 .fitness-header .sub{font-size:13px;opacity:0.85}
-/* BMI卡片 */
+/* BMI卡片 - 自动计算版 */
 .bmi-card{margin:-20px 16px 0;background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);position:relative;z-index:2}
 .bmi-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
 .bmi-circle{width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;font-weight:800}
@@ -194,17 +199,25 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .bmi-bar-track{height:8px;border-radius:4px;background:linear-gradient(90deg,#00B4D8 0%,#43D19E 30%,#FFB830 60%,#FF5C5C 100%);position:relative;margin-bottom:4px}
 .bmi-pointer{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #1A1A2E;transform:translateX(-50%);transition:left 0.5s ease}
 .bmi-bar-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--text3)}
-.bmi-input-row{display:flex;gap:10px;margin-top:12px}
-.bmi-field{flex:1}
-.bmi-field label{font-size:11px;color:var(--text2);font-weight:600;display:block;margin-bottom:4px}
-.bmi-field input{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;background:var(--bg);color:var(--text);outline:none;font-family:inherit}
-.bmi-field input:focus{border-color:var(--success)}
-.bmi-calc-btn{padding:8px 16px;border-radius:8px;border:none;background:var(--success);color:#fff;font-size:12px;font-weight:700;cursor:pointer;align-self:flex-end;margin-bottom:0;white-space:nowrap}
+.bmi-height-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.bmi-height-row label{font-size:12px;color:var(--text2);font-weight:600}
+.bmi-height-row input{width:80px;padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg);color:var(--text);outline:none;font-family:inherit;text-align:center}
+.bmi-height-row input:focus{border-color:var(--success)}
+.bmi-height-row .unit{font-size:12px;color:var(--text3)}
+.bmi-height-row .hint{font-size:11px;color:var(--text3);flex:1;text-align:right}
 /* 体重趋势图 */
-.weight-chart{padding:12px 16px;background:var(--card);border-radius:var(--radius-sm);box-shadow:0 2px 8px rgba(0,0,0,0.05);margin:0 16px 14px}
+.weight-chart{padding:12px 16px;background:var(--card);border-radius:var(--radius-sm);box-shadow:0 2px 8px rgba(0,0,0,0.05);margin:0 16px 14px;flex-shrink:0}
 .weight-chart-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
-.weight-chart-title .add-weight-btn{font-size:11px;color:var(--success);font-weight:600;cursor:pointer}
 .chart-svg{width:100%;height:80px;overflow:visible}
+/* 体重记录列表 */
+.weight-record-item{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:var(--radius-sm);padding:10px 14px;margin:0 16px 8px;box-shadow:0 2px 6px rgba(0,0,0,0.04);cursor:pointer}
+.weight-record-item:active{transform:scale(0.99)}
+.weight-record-item .w-date{font-size:11px;color:var(--text3);width:50px;flex-shrink:0}
+.weight-record-item .w-val{font-size:18px;font-weight:700;color:var(--text);flex:1}
+.weight-record-item .w-note{font-size:11px;color:var(--text3);flex:1;text-align:center}
+.weight-record-item .w-actions{display:flex;gap:4px}
+.weight-record-item .w-btn{font-size:14px;cursor:pointer;padding:4px 6px;border-radius:6px;opacity:0.5;transition:opacity 0.15s}
+.weight-record-item .w-btn:active{opacity:1;background:var(--bg)}
 /* 运动记录 */
 .sport-item{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:8px;box-shadow:0 2px 6px rgba(0,0,0,0.04);cursor:pointer;transition:transform 0.15s}
 .sport-item:active{transform:scale(0.98)}
@@ -215,8 +228,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .sport-stats{text-align:right}
 .sport-stats .s-cal{font-size:16px;font-weight:700;color:var(--danger)}
 .sport-stats .s-unit{font-size:10px;color:var(--text3)}
+.sport-del{font-size:16px;cursor:pointer;padding:4px 6px;border-radius:8px;opacity:0.5;transition:opacity 0.15s}
+.sport-del:active{background:var(--danger);opacity:1}
+/* 运动类型可添加按钮 */
+.sport-type-add-btn{padding:6px 12px;border-radius:20px;border:1.5px dashed var(--border);font-size:12px;color:var(--text3);cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;gap:4px}
+.sport-type-add-btn:hover{border-color:var(--primary);color:var(--primary)}
 /* PROFILE PAGE */
-.profile-header{background:linear-gradient(160deg,#43D19E,#3BB8B8);padding:20px 20px 30px;color:#fff}
+.profile-header{background:linear-gradient(160deg,#43D19E,#3BB8B8);padding:20px 20px 30px;color:#fff;flex-shrink:0}
 .avatar{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:10px;border:3px solid rgba(255,255,255,0.5)}
 .profile-name{font-size:20px;font-weight:700}
 .profile-sub{font-size:12px;opacity:0.85;margin-top:2px}
@@ -239,10 +257,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .settings-item .si-right{display:flex;align-items:center;gap:6px}
 .settings-item .si-right .si-val{font-size:12px;color:var(--text3)}
 .settings-item .si-right svg{width:14px;height:14px;fill:var(--text3)}
-.toggle{width:42px;height:24px;border-radius:12px;background:var(--border);position:relative;cursor:pointer;transition:background 0.2s}
-.toggle.on{background:var(--primary)}
-.toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
-.toggle.on::after{left:21px}
 /* DETAIL */
 .detail-top{padding:16px 20px;border-bottom:1px solid var(--border)}
 .detail-top .d-title{font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px}
@@ -260,6 +274,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .toast{position:absolute;top:60px;left:50%;transform:translateX(-50%) translateY(-20px);background:rgba(26,26,46,0.9);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:500;opacity:0;pointer-events:none;transition:all 0.3s;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 ::-webkit-scrollbar{width:0}
+/* 身高设置弹窗 */
+.height-set-row{display:flex;align-items:center;gap:8px}
+.height-set-row input{width:80px;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);font-size:14px;color:var(--text);outline:none;text-align:center;font-family:inherit}
+.height-set-row input:focus{border-color:var(--primary)}
 </style>
 </head>
 <body>
@@ -267,7 +285,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
   <div class="phone-notch"></div>
   <div class="phone-screen">
     <div class="status-bar">
-      <span class="time" id="statusTime">09:00</span>
       <div class="icons">
         <svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
         <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
@@ -289,6 +306,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
           <div class="progress-header"><span class="progress-label">今日进度</span><span class="progress-val" id="homeProgressVal">0%</span></div>
           <div class="progress-bar-bg"><div class="progress-bar-fill" id="homeProgressBar" style="width:0%"></div></div>
         </div>
+        <!-- quick-actions 使用 sticky，滚动时吸顶 -->
         <div class="quick-actions">
           <div class="quick-btn" onclick="openAddSchedule()"><div class="icon" style="background:var(--primary)"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h-2v-5H5v-2h5V5h2v5h5z"/></svg></div><span class="lbl">添加行程</span></div>
           <div class="quick-btn" onclick="openAddSport()"><div class="icon" style="background:var(--success)"><svg viewBox="0 0 24 24"><path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/></svg></div><span class="lbl">记录运动</span></div>
@@ -326,9 +344,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
         <div class="time-header"><div class="title">专注计时</div><div class="sub">保持专注，高效完成任务</div></div>
         <div class="pomodoro-card">
           <div class="pomo-mode-tabs">
-            <div class="pomo-mode-tab active" onclick="setPomoMode(25,'工作')">工作 25m</div>
-            <div class="pomo-mode-tab" onclick="setPomoMode(5,'短休')">短休 5m</div>
-            <div class="pomo-mode-tab" onclick="setPomoMode(15,'长休')">长休 15m</div>
+            <div class="pomo-mode-tab active" onclick="setPomoMode(25,'工作')">工作</div>
+            <div class="pomo-mode-tab" onclick="setPomoMode(5,'短休')">短休</div>
+            <div class="pomo-mode-tab" onclick="setPomoMode(15,'长休')">长休</div>
+          </div>
+          <!-- 自定义时长 -->
+          <div class="custom-duration-row">
+            <label>自定义：</label>
+            <input type="number" id="customMinInput" min="1" max="180" placeholder="25" value="25">
+            <span class="unit">分钟</span>
+            <button class="set-duration-btn" onclick="setCustomDuration()">设定</button>
           </div>
           <div class="pomodoro-ring" id="pomoRing" style="background:conic-gradient(var(--primary) 0%, var(--border) 0%)">
             <span class="pomodoro-time" id="pomoTime">25:00</span>
@@ -354,6 +379,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
       <!-- ===== 健康页 ===== -->
       <div class="page" id="page-health">
         <div class="fitness-header"><div class="title">健康追踪</div><div class="sub" id="healthSub">今日数据概览</div></div>
+        <!-- BMI 自动计算卡片 -->
         <div class="bmi-card">
           <div class="bmi-top">
             <div class="bmi-circle" id="bmiCircle" style="background:#EDFAF5;color:var(--success)">
@@ -361,24 +387,31 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
             </div>
             <div class="bmi-info">
               <div class="bmi-num" id="bmiNumText">--</div>
-              <div class="bmi-status" id="bmiStatusText" style="color:var(--text3)">请输入身高体重</div>
-              <div class="bmi-hint" id="bmiHintText">BMI = 体重(kg) / 身高(m)²</div>
+              <div class="bmi-status" id="bmiStatusText" style="color:var(--text3)">请设置身高</div>
+              <div class="bmi-hint" id="bmiHintText">设置身高后，根据最新体重自动计算BMI</div>
             </div>
           </div>
           <div class="bmi-bar-area">
             <div class="bmi-bar-track"><div class="bmi-pointer" id="bmiPointer" style="left:30%"></div></div>
             <div class="bmi-bar-labels"><span>偏瘦&lt;18.5</span><span>正常 18.5-24</span><span>超重 24-28</span><span>肥胖&gt;28</span></div>
           </div>
-          <div class="bmi-input-row">
-            <div class="bmi-field"><label>身高(cm)</label><input type="number" id="bmiHeight" placeholder="如 170" oninput="saveBmiInput()"></div>
-            <div class="bmi-field"><label>体重(kg)</label><input type="number" id="bmiWeight" placeholder="如 65" oninput="saveBmiInput()"></div>
-            <button class="bmi-calc-btn" onclick="calcBMI()">计算</button>
+          <div class="bmi-height-row">
+            <label>身高设置：</label>
+            <input type="number" id="bmiHeightInput" placeholder="170" min="100" max="220" oninput="onHeightInput()">
+            <span class="unit">cm</span>
+            <span class="hint" id="bmiHeightHint">首次设置后自动保存</span>
           </div>
         </div>
+        <!-- 体重趋势图 -->
         <div class="weight-chart" style="margin-top:14px">
-          <div class="weight-chart-title">体重趋势 <span class="add-weight-btn" onclick="openAddWeight()">+ 记录体重</span></div>
+          <div class="weight-chart-title">体重趋势</div>
           <svg class="chart-svg" id="weightChartSvg" viewBox="0 0 320 80"></svg>
           <div style="text-align:center;font-size:11px;color:var(--text3);margin-top:4px" id="weightChartHint">暂无体重数据</div>
+        </div>
+        <!-- 体重记录列表 -->
+        <div class="section" style="margin-top:2px">
+          <div class="section-title">体重记录 <span class="more" onclick="openAddWeight()">+ 记录</span></div>
+          <div id="weightRecordList"></div>
         </div>
         <div class="section" style="margin-top:2px">
           <div class="section-title">今日运动<div style="display:flex;align-items:center;gap:10px"><span style="font-size:12px;color:var(--text3)" id="todaySportSummary">0 kcal</span><span class="more" onclick="openAddSport()">+ 记录</span></div></div>
@@ -417,7 +450,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
       <div class="nav-item" id="nav-profile" onclick="switchPage('page-profile')"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><span class="nav-label">我的</span></div>
     </div>
 
-    <div class="fab" id="mainFab" onclick="onFabClick()"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></div>
+    <!-- FAB - 新设计（白底+紫色描边+细线图标） -->
+    <div class="fab" id="mainFab" onclick="onFabClick()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
     <div class="toast" id="toast"></div>
 
     <!-- 弹窗：添加行程 -->
@@ -457,7 +491,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
         <div class="sheet-title"><span>记录运动</span><div class="sheet-close" onclick="closeModal('sportModal')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div></div>
         <div class="sheet-body">
           <input type="hidden" id="editSportId">
-          <div class="form-group"><div class="form-label">运动类型</div><div style="display:flex;gap:8px;flex-wrap:wrap" id="sportTypeOpts"><div class="repeat-opt active" data-val="running" data-icon="🏃" onclick="selectSportType(this)">🏃 跑步</div><div class="repeat-opt" data-val="walking" data-icon="🚶" onclick="selectSportType(this)">🚶 步行</div><div class="repeat-opt" data-val="cycling" data-icon="🚴" onclick="selectSportType(this)">🚴 骑行</div><div class="repeat-opt" data-val="swimming" data-icon="🏊" onclick="selectSportType(this)">🏊 游泳</div><div class="repeat-opt" data-val="gym" data-icon="🏋️" onclick="selectSportType(this)">🏋️ 健身</div><div class="repeat-opt" data-val="yoga" data-icon="🧘" onclick="selectSportType(this)">🧘 瑜伽</div><div class="repeat-opt" data-val="ball" data-icon="⚽" onclick="selectSportType(this)">⚽ 球类</div><div class="repeat-opt" data-val="other" data-icon="🤸" onclick="selectSportType(this)">🤸 其他</div></div><input type="hidden" id="sSportType" value="running"><input type="hidden" id="sSportIcon" value="🏃"></div>
+          <div class="form-group"><div class="form-label">运动类型</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap" id="sportTypeOpts"></div>
+          </div>
           <div class="form-row"><div class="form-group"><div class="form-label">时长(分钟)</div><input class="form-input" id="sDuration" type="number" min="1" placeholder="30"></div><div class="form-group"><div class="form-label">消耗(kcal)</div><input class="form-input" id="sCalories" type="number" min="0" placeholder="自动估算"></div></div>
           <div class="form-group"><div class="form-label">运动强度</div><div style="display:flex;gap:8px"><div class="priority-btn p1" onclick="selectIntensity(this,'low')"><span class="p-icon">😌</span>轻度</div><div class="priority-btn p2 active" onclick="selectIntensity(this,'med')"><span class="p-icon">💪</span>中度</div><div class="priority-btn p3" onclick="selectIntensity(this,'high')"><span class="p-icon">🔥</span>高强</div></div><input type="hidden" id="sIntensity" value="med"></div>
           <div class="form-row"><div class="form-group"><div class="form-label">日期</div><input class="form-input" id="sSportDate" type="date"></div><div class="form-group"><div class="form-label">开始时间</div><input class="form-input" id="sSportTime" type="time"></div></div>
@@ -467,15 +503,32 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
       </div>
     </div>
 
+    <!-- 弹窗：添加自定义运动类型 -->
+    <div class="modal-overlay" id="sportTypeModal">
+      <div class="modal-sheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-title"><span>添加运动类型</span><div class="sheet-close" onclick="closeModal('sportTypeModal')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div></div>
+        <div class="sheet-body">
+          <div class="form-group"><div class="form-label">运动名称 *</div><input class="form-input" id="newSportTypeName" placeholder="如：跳舞、攀岩"></div>
+          <div class="form-group"><div class="form-label">图标（ emoji）</div><input class="form-input" id="newSportTypeIcon" placeholder="如：💃" maxlength="2"></div>
+          <button class="btn-save" onclick="saveSportType()">添加</button>
+        </div>
+      </div>
+    </div>
+
     <!-- 弹窗：记录体重 -->
     <div class="modal-overlay" id="weightModal">
       <div class="modal-sheet">
         <div class="sheet-handle"></div>
-        <div class="sheet-title"><span>记录体重</span><div class="sheet-close" onclick="closeModal('weightModal')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div></div>
+        <div class="sheet-title"><span id="weightModalTitle">记录体重</span><div class="sheet-close" onclick="closeModal('weightModal')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div></div>
         <div class="sheet-body">
+          <input type="hidden" id="editWeightId">
           <div class="form-row"><div class="form-group"><div class="form-label">体重(kg)</div><input class="form-input" id="wWeight" type="number" step="0.1" min="20" placeholder="65.0"></div><div class="form-group"><div class="form-label">日期</div><input class="form-input" id="wDate" type="date"></div></div>
           <div class="form-group"><div class="form-label">备注（心情/状态）</div><input class="form-input" id="wNote" placeholder="可选备注"></div>
-          <button class="btn-save" onclick="saveWeight()">保存体重记录</button>
+          <div class="btn-row">
+            <button class="btn-cancel" onclick="deleteWeightFromModal()" id="weightDeleteBtn" style="display:none">删除</button>
+            <button class="btn-save" onclick="saveWeight()">保存体重记录</button>
+          </div>
         </div>
       </div>
     </div>
@@ -497,23 +550,32 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 </div>
 
 <script>
+// ===================== 数据层 =====================
 var schedules=JSON.parse(localStorage.getItem('schedules_v2')||'[]');
 var tasks=JSON.parse(localStorage.getItem('tasks_v2')||'[]');
 var sportLogs=JSON.parse(localStorage.getItem('sportLogs')||'[]');
 var weightLogs=JSON.parse(localStorage.getItem('weightLogs')||'[]');
 var pomoData=JSON.parse(localStorage.getItem('pomoData')||'{"todayCount":0,"totalMin":0,"lastDate":""}');
-function save(){localStorage.setItem('schedules_v2',JSON.stringify(schedules));localStorage.setItem('tasks_v2',JSON.stringify(tasks));localStorage.setItem('sportLogs',JSON.stringify(sportLogs));localStorage.setItem('weightLogs',JSON.stringify(weightLogs));localStorage.setItem('pomoData',JSON.stringify(pomoData));}
+// 自定义运动类型
+var customSportTypes=JSON.parse(localStorage.getItem('customSportTypes')||'[]');
+// 身高（BMI计算用）
+var userHeight=localStorage.getItem('userHeight')||'';
+
+function save(){localStorage.setItem('schedules_v2',JSON.stringify(schedules));localStorage.setItem('tasks_v2',JSON.stringify(tasks));localStorage.setItem('sportLogs',JSON.stringify(sportLogs));localStorage.setItem('weightLogs',JSON.stringify(weightLogs));localStorage.setItem('pomoData',JSON.stringify(pomoData));localStorage.setItem('customSportTypes',JSON.stringify(customSportTypes));}
+
+// ===================== 工具函数 =====================
 function fmtDate(d){if(typeof d==='string')return d;return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function parseDate(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
 function today(){return fmtDate(new Date());}
 function genId(){return Date.now()+Math.floor(Math.random()*1000);}
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2200);}
-function updateStatusTime(){var n=new Date();document.getElementById('statusTime').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
-setInterval(updateStatusTime,1000);updateStatusTime();
+function updateStatusTime(){}
+setInterval(updateStatusTime,1000);
 
+// 初始化演示数据（仅在首次空数据时）
 if(!schedules.length){
   var td=today(),tm=fmtDate(new Date(Date.now()+86400000));
-  schedules=[{id:1,title:'产品需求评审',date:td,time:'09:30',type:'work',location:'会议室A',color:'#6C63FF',priority:'high',repeat:'none',remind:'15min',note:''},{id:2,title:'午跑 5km',date:td,time:'12:00',type:'health',location:'公园',color:'#43D19E',priority:'med',repeat:'workday',remind:'none',note:''},{id:3,title:'团队周会',date:td,time:'14:00',type:'work',location:'线上',color:'#0096C7',priority:'high',repeat:'weekly',remind:'15min',note:''},{id:4,title:'读书 1小时',date:td,time:'21:00',type:'study',location:'',color:'#FFB830',priority:'low',repeat:'daily',remind:'none',note:''},{id:5,title:'客户拜访',date:tm,time:'10:00',type:'work',location:'客户公司',color:'#FF6584',priority:'high',repeat:'none',remind:'1h',note:''},{id:6,title:'健身训练',date:tm,time:'18:30',type:'health',location:'健身房',color:'#43D19E',priority:'med',repeat:'weekly',remind:'none',note:''}];
+  schedules=[{id:1,title:'产品需求评审',date:td,time:'09:30',type:'work',location:'会议室A',color:'#6C63FF',priority:'high',repeat:'none',remind:'15min',note:''},{id:2,title:'午跑 5km',date:td,time:'12:00',type:'health',location:'公园',color:'#43D19E',priority:'med',repeat:'workday',remind:'none',note:''},{id:3,title:'团队周会',date:td,time:'14:00',type:'work',location:'线上',color:'#0096C7',priority:'high',repeat:'weekly',remind:'15min',note:''},{id:4,title:'读书 1小时',date:td,time:'21:00',type:'study',location:'',color:'FFB830',priority:'low',repeat:'daily',remind:'none',note:''},{id:5,title:'客户拜访',date:tm,time:'10:00',type:'work',location:'客户公司',color:'#FF6584',priority:'high',repeat:'none',remind:'1h',note:''},{id:6,title:'健身训练',date:tm,time:'18:30',type:'health',location:'健身房',color:'#43D19E',priority:'med',repeat:'weekly',remind:'none',note:''}];
   tasks=[{id:1,name:'完成项目方案文档',done:false,priority:'high',estimate:60},{id:2,name:'回复邮件',done:false,priority:'med',estimate:30},{id:3,name:'整理桌面文件',done:true,priority:'low',estimate:15}];
   save();
 }
@@ -532,6 +594,7 @@ function typeEmoji(t){return{work:'💼',health:'🏃',social:'🎉',travel:'✈
 function typeName(t){return{work:'工作',health:'健康',social:'社交',travel:'出行',study:'学习',life:'生活',other:'其他'}[t]||'其他';}
 function repeatMap(r){return{daily:'每天',workday:'工作日',weekly:'每周',monthly:'每月',yearly:'每年',none:''}[r]||'';}
 
+// ===================== 页面切换 =====================
 var currentPage='page-home';
 function switchPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
@@ -540,10 +603,15 @@ function switchPage(id){
   var m={'page-home':'nav-home','page-cal':'nav-cal','page-time':'nav-time','page-health':'nav-health','page-profile':'nav-profile'};
   var ni=document.getElementById(m[id]);if(ni)ni.classList.add('active');
   currentPage=id;
-  if(id==='page-home')renderHome();if(id==='page-cal')renderCalendar();if(id==='page-time')renderTimePage();if(id==='page-health')renderHealthPage();if(id==='page-profile')renderProfile();
+  if(id==='page-home')renderHome();
+  if(id==='page-cal')renderCalendar();
+  if(id==='page-time')renderTimePage();
+  if(id==='page-health')renderHealthPage();
+  if(id==='page-profile')renderProfile();
 }
 function onFabClick(){if(currentPage==='page-cal'||currentPage==='page-home')openAddSchedule();else if(currentPage==='page-health')openAddSport();else if(currentPage==='page-time')openAddTask();else openAddSchedule();}
 
+// ===================== 首页 =====================
 function renderHome(){
   var d=new Date(),wdays=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],months=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
   var h=d.getHours(),g=h<6?'深夜好':h<9?'早上好':h<12?'上午好':h<14?'中午好':h<18?'下午好':'晚上好';
@@ -561,9 +629,10 @@ function renderHome(){
 function renderScheduleItem(s,ds){
   var rL=s.repeat&&s.repeat!=='none'?'<span class="repeat-tag">🔁 '+repeatMap(s.repeat)+'</span>':'';
   var pC=s.priority==='high'?'var(--danger)':s.priority==='med'?'var(--warning)':'var(--success)';
-  return '<div class="schedule-item" onclick="openDetail(\''+s.id+'\',\''+ds+'\')">'+'<div class="color-bar" style="background:'+s.color+'"></div>'+'<div class="content"><div class="title">'+s.title+'</div>'+'<div class="meta">'+(s.time?'<span class="time">'+s.time+'</span>':'')+'<span class="tag">'+typeEmoji(s.type)+' '+typeName(s.type)+'</span>'+rL+'</div></div>'+'<div class="right-part"><div class="status-dot" style="background:'+pC+'"></div>'+(s.location?'<span style="font-size:10px;color:var(--text3)">📍'+s.location+'</span>':'')+'</div></div>';
+  return '<div class="schedule-item">'+'<div class="color-bar" style="background:'+s.color+'"></div>'+'<div class="content" onclick="openDetail(\''+s.id+'\',\''+ds+'\')"><div class="title">'+s.title+'</div>'+'<div class="meta">'+(s.time?'<span class="time">'+s.time+'</span>':'')+'<span class="tag">'+typeEmoji(s.type)+' '+typeName(s.type)+'</span>'+rL+'</div></div>'+'<div class="right-part"><div class="status-dot" style="background:'+pC+'"></div><span class="del-btn" onclick="event.stopPropagation();deleteSchedule(\''+s.id+'\')" title="删除">🗑</span></div></div>';
 }
 
+// ===================== 日历页 =====================
 var calYear,calMonth2,selectedDate;
 function initCal(){var d=new Date();calYear=d.getFullYear();calMonth2=d.getMonth();selectedDate=today();}
 function renderCalendar(){
@@ -590,10 +659,11 @@ function renderDaySchedules(d){
   el.innerHTML=list.length?list.map(function(s){return renderScheduleItem(s,d);}).join(''):'<div class="empty-day"><span class="emoji">📅</span>这天暂无行程</div>';
 }
 
+// ===================== 日程增删改 =====================
 var detailScheduleId=null;
 function openAddSchedule(pf){
   document.getElementById('editScheduleId').value='';document.getElementById('scheduleModalTitle').textContent='添加行程';
-  document.getElementById('sTitle').value='';document.getElementById('sDate').value=pf||today();document.getElementById('sTime').value='09:00';
+  document.getElementById('sTitle').value='';document.getElementById('sDate').value=pf||selectedDate||today();document.getElementById('sTime').value='09:00';
   document.getElementById('sType').value='work';document.getElementById('sLocation').value='';document.getElementById('sNote').value='';
   document.getElementById('sRepeat').value='none';document.getElementById('sPriority').value='med';document.getElementById('sColor').value='#6C63FF';document.getElementById('sRemind').value='none';
   document.querySelectorAll('.repeat-opts .repeat-opt').forEach(function(e){e.classList.toggle('active',e.dataset.val==='none');});
@@ -617,7 +687,29 @@ function openDetail(id,ds){
 }
 function dR(i,t){return '<div class="detail-info-row"><div class="di-icon"><span style="font-size:16px">'+i+'</span></div><div class="di-text">'+t+'</div></div>';}
 function rLbl(r){return{none:'不提醒','5min':'提前5分钟','15min':'提前15分钟','1h':'提前1小时','1day':'提前1天'}[r]||r;}
-function deleteScheduleFromDetail(){if(!confirm('确认删除此行程？'))return;schedules=schedules.filter(function(s){return s.id!=detailScheduleId;});save();closeModal('detailModal');toast('行程已删除');if(currentPage==='page-home')renderHome();if(currentPage==='page-cal')renderCalendar();}
+
+// 直接删除（不需要弹窗确认）
+function deleteSchedule(id){
+  if(!confirm('确认删除此行程？'))return;
+  schedules=schedules.filter(function(s){return s.id!=id;});
+  save();
+  toast('行程已删除');
+  if(currentPage==='page-home')renderHome();
+  if(currentPage==='page-cal')renderCalendar();
+}
+
+// 详情页删除
+function deleteScheduleFromDetail(){
+  if(!detailScheduleId)return;
+  if(!confirm('确认删除此行程？'))return;
+  schedules=schedules.filter(function(s){return s.id!=detailScheduleId;});
+  save();
+  closeModal('detailModal');
+  toast('行程已删除');
+  detailScheduleId=null;
+  if(currentPage==='page-home')renderHome();
+  if(currentPage==='page-cal')renderCalendar();
+}
 function editScheduleFromDetail(){
   var s=schedules.find(function(x){return x.id==detailScheduleId;});if(!s)return;closeModal('detailModal');
   document.getElementById('editScheduleId').value=s.id;document.getElementById('scheduleModalTitle').textContent='编辑行程';
@@ -644,12 +736,14 @@ function selectPriority(el,v){document.querySelectorAll('.priority-group .priori
 function selectColor(el){document.querySelectorAll('.color-dot').forEach(function(e){e.classList.remove('selected');});el.classList.add('selected');document.getElementById('sColor').value=el.dataset.c;}
 function selectRemind(el){document.querySelectorAll('.remind-opt').forEach(function(e){e.classList.remove('active');});el.classList.add('active');document.getElementById('sRemind').value=el.dataset.val;}
 
+// ===================== 专注计时页 =====================
 var pomoInterval=null,pomoRunning=false,pomoTotalSec=1500,pomoRemain=1500,pomoMode='工作';
-function setPomoMode(min,label){pomoReset();pomoTotalSec=min*60;pomoRemain=min*60;pomoMode=label;document.getElementById('pomoTime').textContent=fp(pomoRemain);document.querySelectorAll('.pomo-mode-tab').forEach(function(t,i){t.classList.toggle('active',i===[25,5,15].indexOf(min));});updRing();}
+function setPomoMode(min,label){pomoReset();pomoTotalSec=min*60;pomoRemain=min*60;pomoMode=label;document.getElementById('pomoTime').textContent=fp(pomoRemain);document.getElementById('customMinInput').value=min;document.querySelectorAll('.pomo-mode-tab').forEach(function(t,i){t.classList.toggle('active',[25,5,15].indexOf(min)===i);});updRing();}
+function setCustomDuration(){var m=+document.getElementById('customMinInput').value;if(!m||m<1||m>180){toast('请输入1-180之间的分钟数');return;}pomoReset();pomoTotalSec=m*60;pomoRemain=m*60;pomoMode='自定义';document.getElementById('pomoTime').textContent=fp(pomoRemain);document.querySelectorAll('.pomo-mode-tab').forEach(function(t){t.classList.remove('active');});updRing();toast('已设为 '+m+' 分钟');}
 function fp(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
 function pomoToggle(){if(pomoRunning){clearInterval(pomoInterval);pomoRunning=false;document.getElementById('pomoStartBtn').textContent='继续';}else{pomoRunning=true;document.getElementById('pomoStartBtn').textContent='暂停';pomoInterval=setInterval(function(){pomoRemain--;if(pomoRemain<=0){pomoFinish();return;}document.getElementById('pomoTime').textContent=fp(pomoRemain);updRing();},1000);}}
 function pomoReset(){clearInterval(pomoInterval);pomoRunning=false;pomoRemain=pomoTotalSec;document.getElementById('pomoTime').textContent=fp(pomoRemain);document.getElementById('pomoStartBtn').textContent='开始';document.getElementById('pomoStatus').textContent='准备开始';updRing();}
-function pomoFinish(){clearInterval(pomoInterval);pomoRunning=false;if(pomoMode==='工作'){var d=today();if(pomoData.lastDate!==d){pomoData.todayCount=0;pomoData.totalMin=0;pomoData.lastDate=d;}pomoData.todayCount++;pomoData.totalMin+=Math.floor(pomoTotalSec/60);save();}toast('🍅 专注完成！休息一下');document.getElementById('pomoStatus').textContent='完成！';pomoRemain=pomoTotalSec;document.getElementById('pomoTime').textContent=fp(pomoRemain);document.getElementById('pomoStartBtn').textContent='再来一次';updRing();renderTimePage();}
+function pomoFinish(){clearInterval(pomoInterval);pomoRunning=false;if(pomoMode==='工作'||pomoMode==='自定义'){var d=today();if(pomoData.lastDate!==d){pomoData.todayCount=0;pomoData.totalMin=0;pomoData.lastDate=d;}pomoData.todayCount++;pomoData.totalMin+=Math.floor(pomoTotalSec/60);save();}toast('🍅 专注完成！休息一下');document.getElementById('pomoStatus').textContent='完成！';pomoRemain=pomoTotalSec;document.getElementById('pomoTime').textContent=fp(pomoRemain);document.getElementById('pomoStartBtn').textContent='再来一次';updRing();renderTimePage();}
 function updRing(){var p=((pomoTotalSec-pomoRemain)/pomoTotalSec*100).toFixed(1);document.getElementById('pomoRing').style.background='conic-gradient(var(--primary) '+p+'%, var(--border) '+p+'%)';}
 function renderTimePage(){
   var d=today();if(pomoData.lastDate!==d){pomoData.todayCount=0;pomoData.totalMin=0;}
@@ -657,54 +751,174 @@ function renderTimePage(){
   var dn=tasks.filter(function(t){return t.done;}).length;document.getElementById('taskDoneCount').textContent=dn;document.getElementById('taskTotalCount').textContent=tasks.length;
   var el=document.getElementById('taskList');
   if(!tasks.length){el.innerHTML='<div class="empty-day"><span class="emoji">✅</span>暂无任务</div>';return;}
-  el.innerHTML=tasks.map(function(t){var pl={high:'🔴高',med:'🟡中',low:'🟢低'}[t.priority||'med'];return '<div class="task-item"><div class="task-check '+(t.done?'done':'')+'" onclick="toggleTask('+t.id+')"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="task-info"><div class="t-name '+(t.done?'done-text':'')+'">'+t.name+'</div>'+(t.estimate?'<div class="t-time">⏱ 预计'+t.estimate+'分钟</div>':'')+'</div><span class="task-priority '+(t.priority||'med')+'">'+pl+'</span><span style="font-size:18px;cursor:pointer;margin-left:8px" onclick="deleteTask('+t.id+')">🗑</span></div>';}).join('');
+  el.innerHTML=tasks.map(function(t){var pl={high:'🔴高',med:'🟡中',low:'🟢低'}[t.priority||'med'];return '<div class="task-item"><div class="task-check '+(t.done?'done':'')+'" onclick="toggleTask('+t.id+')"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="task-info"><div class="t-name '+(t.done?'done-text':'')+'">'+t.name+'</div>'+(t.estimate?'<div class="t-time">⏱ 预计'+t.estimate+'分钟</div>':'')+'</div><span class="task-priority '+(t.priority||'med')+'">'+pl+'</span><span class="task-del" onclick="deleteTask('+t.id+')" title="删除">🗑</span></div>';}).join('');
 }
 function toggleTask(id){var t=tasks.find(function(x){return x.id===id;});if(t){t.done=!t.done;save();renderTimePage();}}
-function deleteTask(id){tasks=tasks.filter(function(t){return t.id!==id;});save();renderTimePage();}
+function deleteTask(id){tasks=tasks.filter(function(t){return t.id!==id;});save();renderTimePage();toast('任务已删除');}
 function openAddTask(){document.getElementById('tName').value='';document.getElementById('tEstimate').value='';document.getElementById('tPriority').value='med';openModal('taskModal');}
 function saveTask(){var n=document.getElementById('tName').value.trim();if(!n){toast('请填写任务名称');return;}tasks.push({id:genId(),name:n,priority:document.getElementById('tPriority').value,estimate:+document.getElementById('tEstimate').value||0,done:false});save();closeModal('taskModal');renderTimePage();toast('任务已添加');}
 
+// ===================== 健康页 =====================
+function getAllSportTypes(){
+  var builtIn=[
+    {val:'running',icon:'🏃',name:'跑步'},{val:'walking',icon:'🚶',name:'步行'},{val:'cycling',icon:'🚴',name:'骑行'},
+    {val:'swimming',icon:'🏊',name:'游泳'},{val:'gym',icon:'🏋️',name:'健身'},{val:'yoga',icon:'🧘',name:'瑜伽'},
+    {val:'ball',icon:'⚽',name:'球类'},{val:'other',icon:'🤸',name:'其他'}
+  ];
+  var custom=customSportTypes.map(function(c){return{val:c.val,icon:c.icon,name:c.name};});
+  return builtIn.concat(custom);
+}
+function renderSportTypeOpts(selected){
+  var types=getAllSportTypes();
+  var html=types.map(function(t){return'<div class="repeat-opt '+(t.val===selected?'active':'')+'" data-val="'+t.val+'" data-icon="'+t.icon+'" data-name="'+t.name+'" onclick="selectSportType(this)">'+t.icon+' '+t.name+'</div>';}).join('');
+  html+='<div class="sport-type-add-btn" onclick="openAddSportType()">+ 添加类型</div>';
+  document.getElementById('sportTypeOpts').innerHTML=html;
+}
+function openAddSportType(){document.getElementById('newSportTypeName').value='';document.getElementById('newSportTypeIcon').value='';openModal('sportTypeModal');}
+function saveSportType(){
+  var name=document.getElementById('newSportTypeName').value.trim();
+  var icon=document.getElementById('newSportTypeIcon').value.trim()||'🏃';
+  if(!name){toast('请输入运动名称');return;}
+  var val='custom_'+Date.now();
+  customSportTypes.push({val:val,icon:icon,name:name});
+  localStorage.setItem('customSportTypes',JSON.stringify(customSportTypes));
+  closeModal('sportTypeModal');
+  toast('运动类型已添加：'+name);
+  // 重新渲染并选中新类型
+  renderSportTypeOpts(val);
+  document.getElementById('sSportType').value=val;
+  document.getElementById('sSportIcon').value=icon;
+}
+
 function renderHealthPage(){
-  var bh=localStorage.getItem('bmiHeight')||'',bw=localStorage.getItem('bmiWeight')||'';
-  if(bh)document.getElementById('bmiHeight').value=bh;if(bw)document.getElementById('bmiWeight').value=bw;if(bh&&bw)calcBMI(false);
-  renderWeightChart();renderSportList();
+  // 身高
+  if(userHeight)document.getElementById('bmiHeightInput').value=userHeight;
+  autoCalcBMI();
+  renderWeightChart();
+  renderWeightRecordList();
+  renderSportList();
   var tc=sportLogs.filter(function(s){return s.date===today();}).reduce(function(a,c){return a+(+c.calories||0);},0);
-  document.getElementById('todaySportSummary').textContent=tc+' kcal';document.getElementById('healthSub').textContent='今日消耗 '+tc+' kcal · 体重记录 '+weightLogs.length+' 次';
+  document.getElementById('todaySportSummary').textContent=tc+' kcal';
+  document.getElementById('healthSub').textContent='今日消耗 '+tc+' kcal · 体重记录 '+weightLogs.length+' 次';
 }
-function saveBmiInput(){localStorage.setItem('bmiHeight',document.getElementById('bmiHeight').value);localStorage.setItem('bmiWeight',document.getElementById('bmiWeight').value);}
-function calcBMI(show){
-  if(show===undefined)show=true;
-  var h=+document.getElementById('bmiHeight').value,w=+document.getElementById('bmiWeight').value;
-  if(!h||!w){if(show)toast('请先填写身高和体重');return;}
-  var bmi=(w/Math.pow(h/100,2)).toFixed(1),st,co,hi,pc;
-  if(bmi<18.5){st='偏瘦';co='#00B4D8';hi='建议适当增加营养摄入';pc=Math.max(2,bmi/18.5*28);}
-  else if(bmi<24){st='正常';co='#43D19E';hi='保持良好，继续加油！';pc=28+(bmi-18.5)/5.5*26;}
-  else if(bmi<28){st='超重';co='#FFB830';hi='建议适当控制饮食和运动';pc=54+(bmi-24)/4*20;}
-  else{st='肥胖';co='#FF5C5C';hi='建议积极减肥并咨询医生';pc=Math.min(97,74+(bmi-28)/10*20);}
-  document.getElementById('bmiVal').textContent=bmi;document.getElementById('bmiNumText').textContent='BMI '+bmi;
-  document.getElementById('bmiStatusText').textContent=st;document.getElementById('bmiStatusText').style.color=co;
-  document.getElementById('bmiHintText').textContent=hi;document.getElementById('bmiCircle').style.background=co+'22';document.getElementById('bmiCircle').style.color=co;
-  document.getElementById('bmiPointer').style.left=pc+'%';if(show)toast('BMI '+bmi+' · '+st);
+function onHeightInput(){
+  var h=document.getElementById('bmiHeightInput').value;
+  userHeight=h;
+  localStorage.setItem('userHeight',h);
+  autoCalcBMI();
 }
+
+// BMI自动计算（基于最新体重记录）
+function autoCalcBMI(){
+  var h=+userHeight;
+  if(!h||h<100||h>220){
+    document.getElementById('bmiVal').textContent='--';
+    document.getElementById('bmiNumText').textContent='--';
+    document.getElementById('bmiStatusText').textContent='请设置身高';
+    document.getElementById('bmiStatusText').style.color='var(--text3)';
+    document.getElementById('bmiHintText').textContent='设置身高后，根据最新体重自动计算BMI';
+    document.getElementById('bmiPointer').style.left='30%';
+    document.getElementById('bmiCircle').style.background='#EDFAF5';
+    document.getElementById('bmiCircle').style.color='var(--text3)';
+    return;
+  }
+  // 取最后一条体重记录
+  if(!weightLogs.length){
+    document.getElementById('bmiVal').textContent='--';
+    document.getElementById('bmiNumText').textContent='--';
+    document.getElementById('bmiStatusText').textContent='暂无体重记录';
+    document.getElementById('bmiStatusText').style.color='var(--text3)';
+    document.getElementById('bmiHintText').textContent='记录体重后自动计算BMI';
+    document.getElementById('bmiPointer').style.left='30%';
+    document.getElementById('bmiCircle').style.background='#EDFAF5';
+    document.getElementById('bmiCircle').style.color='var(--text3)';
+    return;
+  }
+  var sorted=[].concat(weightLogs).sort(function(a,b){return b.date.localeCompare(a.date);});
+  var latest=sorted[0],w=+latest.weight;
+  if(!w)return;
+  var bmi=(w/Math.pow(h/100,2)).toFixed(1),st,co,pc;
+  if(bmi<18.5){st='偏瘦';co='#00B4D8';pc=Math.max(2,bmi/18.5*28);}
+  else if(bmi<24){st='正常';co='#43D19E';pc=28+(bmi-18.5)/5.5*26;}
+  else if(bmi<28){st='超重';co='#FFB830';pc=54+(bmi-24)/4*20;}
+  else{st='肥胖';co='#FF5C5C';pc=Math.min(97,74+(bmi-28)/10*20);}
+  var hint={偏瘦:'建议适当增加营养摄入',正常:'保持良好，继续加油！',超重:'建议适当控制饮食和运动',肥胖:'建议积极减肥并咨询医生'}[st];
+  document.getElementById('bmiVal').textContent=bmi;
+  document.getElementById('bmiNumText').textContent='BMI '+bmi;
+  document.getElementById('bmiStatusText').textContent=st+' · '+latest.weight+'kg';
+  document.getElementById('bmiStatusText').style.color=co;
+  document.getElementById('bmiHintText').textContent=hint;
+  document.getElementById('bmiPointer').style.left=pc+'%';
+  document.getElementById('bmiCircle').style.background=co+'22';
+  document.getElementById('bmiCircle').style.color=co;
+}
+
+// 体重趋势图 - 只显示每日最后一条
 function renderWeightChart(){
   var svg=document.getElementById('weightChartSvg'),hint=document.getElementById('weightChartHint');
-  if(!weightLogs.length){svg.innerHTML='';hint.textContent='暂无体重数据，点击「+ 记录体重」添加';return;}
+  if(!weightLogs.length){svg.innerHTML='';hint.textContent='暂无体重数据，点击「+ 记录」添加';return;}
   hint.textContent='';
-  var s=JSON.parse(JSON.stringify(weightLogs)).sort(function(a,b){return a.date.localeCompare(b.date);}).slice(-20);
-  var W=320,H=80,P=20,vs=s.map(function(w){return +w.weight;}),mn=Math.min.apply(null,vs)-1,mx=Math.max.apply(null,vs)+1;
-  var xs=s.length>1?(W-P*2)/(s.length-1):0;
-  var pts=s.map(function(w,i){return{x:P+i*xs,y:H-P-(+w.weight-mn)/(mx-mn||1)*(H-P*2),w:w};});
+  // 每日取最后一条
+  var dayLast={};
+  [].concat(weightLogs).sort(function(a,b){return a.date.localeCompare(b.date);}).forEach(function(w){dayLast[w.date]=w;});
+  var arr=Object.keys(dayLast).sort().slice(-20).map(function(d){return dayLast[d];});
+  if(arr.length<1){svg.innerHTML='';hint.textContent='暂无体重数据';return;}
+  var W=320,H=80,P=20,vs=arr.map(function(w){return +w.weight;}),mn=Math.min.apply(null,vs)-1,mx=Math.max.apply(null,vs)+1;
+  var xs=arr.length>1?(W-P*2)/(arr.length-1):0;
+  var pts=arr.map(function(w,i){return{x:P+i*xs,y:H-P-(+w.weight-mn)/(mx-mn||1)*(H-P*2)};});
   var pa=pts.map(function(p,i){return(i===0?'M':'L')+p.x+','+p.y;}).join(' ');
   var fi=pa+' L'+pts[pts.length-1].x+','+H+' L'+pts[0].x+','+H+' Z';
-  svg.innerHTML='<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#43D19E" stop-opacity="0.3"/><stop offset="100%" stop-color="#43D19E" stop-opacity="0.02"/></linearGradient></defs>'+'<path d="'+fi+'" fill="url(#wg)"/>'+'<path d="'+pa+'" fill="none" stroke="#43D19E" stroke-width="2"/>'+pts.map(function(p){return'<circle cx="'+p.x+'" cy="'+p.y+'" r="3" fill="#43D19E"/>';}).join('')+pts.map(function(p){return'<text x="'+p.x+'" y="'+(p.y-6)+'" text-anchor="middle" font-size="9" fill="#666680">'+p.w.weight+'</text>';}).join('')+'<text x="'+pts[0].x+'" y="'+(H-4)+'" text-anchor="start" font-size="8" fill="#A0A0B8">'+s[0].date.slice(5)+'</text>'+(s.length>1?'<text x="'+pts[pts.length-1].x+'" y="'+(H-4)+'" text-anchor="end" font-size="8" fill="#A0A0B8">'+s[s.length-1].date.slice(5)+'</text>':'');
+  svg.innerHTML='<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#43D19E" stop-opacity="0.3"/><stop offset="100%" stop-color="#43D19E" stop-opacity="0.02"/></linearGradient></defs>'+
+    '<path d="'+fi+'" fill="url(#wg)"/>'+
+    '<path d="'+pa+'" fill="none" stroke="#43D19E" stroke-width="2"/>'+
+    pts.map(function(p){return'<circle cx="'+p.x+'" cy="'+p.y+'" r="3" fill="#43D19E"/>';}).join('')+
+    pts.map(function(p,i){return'<text x="'+p.x+'" y="'+(p.y-6)+'" text-anchor="middle" font-size="9" fill="#666680">'+arr[i].weight+'</text>';}).join('')+
+    '<text x="'+pts[0].x+'" y="'+(H-4)+'" text-anchor="start" font-size="8" fill="#A0A0B8">'+arr[0].date.slice(5)+'</text>'+
+    (arr.length>1?'<text x="'+pts[pts.length-1].x+'" y="'+(H-4)+'" text-anchor="end" font-size="8" fill="#A0A0B8">'+arr[arr.length-1].date.slice(5)+'</text>':'');
 }
+
+// 体重记录列表（支持编辑/删除）
+function renderWeightRecordList(){
+  var el=document.getElementById('weightRecordList');
+  if(!weightLogs.length){el.innerHTML='<div class="empty-day"><span class="emoji">⚖️</span>还没有体重记录</div>';return;}
+  var sorted=[].concat(weightLogs).sort(function(a,b){return b.date.localeCompare(a.date);});
+  el.innerHTML=sorted.map(function(w){return'<div class="weight-record-item"><div class="w-date">'+w.date.slice(5)+'</div><div class="w-val">'+w.weight+' kg</div><div class="w-note">'+(w.note||'')+'</div><div class="w-actions"><span class="w-btn" onclick="editWeight(\''+w.id+'\')" title="编辑">✏️</span><span class="w-btn" onclick="deleteWeight(\''+w.id+'\')" title="删除">🗑</span></div></div>';}).join('');
+}
+function openAddWeight(){
+  document.getElementById('editWeightId').value='';document.getElementById('weightModalTitle').textContent='记录体重';
+  document.getElementById('wWeight').value='';document.getElementById('wDate').value=today();document.getElementById('wNote').value='';
+  document.getElementById('weightDeleteBtn').style.display='none';
+  openModal('weightModal');
+}
+function editWeight(id){
+  var w=weightLogs.find(function(x){return x.id==id;});if(!w)return;
+  document.getElementById('editWeightId').value=w.id;document.getElementById('weightModalTitle').textContent='编辑体重';
+  document.getElementById('wWeight').value=w.weight;document.getElementById('wDate').value=w.date;document.getElementById('wNote').value=w.note||'';
+  document.getElementById('weightDeleteBtn').style.display='flex';
+  openModal('weightModal');
+}
+function deleteWeight(id){if(!confirm('确认删除此体重记录？'))return;weightLogs=weightLogs.filter(function(w){return w.id!=id;});save();renderHealthPage();toast('已删除');}
+function deleteWeightFromModal(){
+  var id=document.getElementById('editWeightId').value;if(!id)return;
+  if(!confirm('确认删除此体重记录？'))return;
+  weightLogs=weightLogs.filter(function(w){return w.id!=id;});save();closeModal('weightModal');renderHealthPage();toast('已删除');}
+function saveWeight(){
+  var w=+document.getElementById('wWeight').value;if(!w||w<20||w>300){toast('请输入合理的体重(20-300kg)');return;}
+  var d=document.getElementById('wDate').value;if(!d){toast('请选择日期');return;}
+  var eid=document.getElementById('editWeightId').value;
+  var rc={id:eid?+eid:genId(),weight:w,date:d,note:document.getElementById('wNote').value};
+  if(eid)weightLogs=weightLogs.map(function(x){return x.id==+eid?rc:x;});else weightLogs.push(rc);
+  save();closeModal('weightModal');toast(eid?'体重已更新 ⚖️':'体重已记录 ⚖️');renderHealthPage();
+}
+
+// 运动记录
 function renderSportList(){
   var el=document.getElementById('sportList'),ts=sportLogs.filter(function(s){return s.date===today();}).sort(function(a,b){return b.id-a.id;});
   if(!ts.length){el.innerHTML='<div class="empty-day"><span class="emoji">🏃</span>今天还没有运动记录</div>';return;}
-  el.innerHTML=ts.map(function(s){return'<div class="sport-item"><div class="sport-icon" style="background:'+sBg(s.type)+'">'+(s.icon||'🏃')+'</div><div class="sport-info"><div class="s-name">'+sName(s.type)+'</div><div class="s-meta">'+s.duration+'分钟 · '+iLbl(s.intensity)+' · '+(s.time||'')+'</div></div><div class="sport-stats"><div class="s-cal">'+(s.calories||0)+'</div><div class="s-unit">kcal</div></div><span style="font-size:16px;cursor:pointer;margin-left:8px" onclick="deleteSport('+s.id+')">🗑</span></div>';}).join('');
+  el.innerHTML=ts.map(function(s){return'<div class="sport-item"><div class="sport-icon" style="background:'+sBg(s.type)+'">'+(s.icon||'🏃')+'</div><div class="sport-info"><div class="s-name">'+sName(s.type)+'</div><div class="s-meta">'+s.duration+'分钟 · '+iLbl(s.intensity)+' · '+(s.time||'')+'</div></div><div class="sport-stats"><div class="s-cal">'+(s.calories||0)+'</div><div class="s-unit">kcal</div></div><span class="sport-del" onclick="deleteSport('+s.id+')" title="删除">🗑</span></div>';}).join('');
 }
 function sBg(t){return{running:'#EDFAF5',walking:'#E8F4FD',cycling:'#FFF7E6',swimming:'#EEF0FF',gym:'#FFF0F0',yoga:'#F3E8FF',ball:'#FFF7E6',other:'#F5F5F5'}[t]||'#F5F5F5';}
-function sName(t){return{running:'跑步',walking:'步行',cycling:'骑行',swimming:'游泳',gym:'健身',yoga:'瑜伽',ball:'球类',other:'其他运动'}[t]||'运动';}
+function sName(t){var all=getAllSportTypes();var f=all.find(function(a){return a.val===t;});return f?f.name:'运动';}
 function iLbl(i){return{low:'轻度',med:'中度',high:'高强度'}[i]||'中度';}
 function deleteSport(id){if(!confirm('确认删除？'))return;sportLogs=sportLogs.filter(function(s){return s.id!==id;});save();renderHealthPage();toast('已删除');}
 function openAddSport(){
@@ -712,40 +926,37 @@ function openAddSport(){
   var n=new Date();document.getElementById('sSportTime').value=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
   document.getElementById('sDuration').value='';document.getElementById('sCalories').value='';document.getElementById('sSportNote').value='';
   document.getElementById('sSportType').value='running';document.getElementById('sSportIcon').value='🏃';document.getElementById('sIntensity').value='med';
-  document.querySelectorAll('#sportTypeOpts .repeat-opt').forEach(function(e){e.classList.toggle('active',e.dataset.val==='running');});
+  renderSportTypeOpts('running');
   document.querySelectorAll('#sportModal .priority-btn').forEach(function(e){e.classList.remove('active');});document.querySelector('#sportModal .priority-btn.p2').classList.add('active');
   openModal('sportModal');
 }
 function selectSportType(el){document.querySelectorAll('#sportTypeOpts .repeat-opt').forEach(function(e){e.classList.remove('active');});el.classList.add('active');document.getElementById('sSportType').value=el.dataset.val;document.getElementById('sSportIcon').value=el.dataset.icon||'🏃';document.getElementById('sCalories').value=eCal(el.dataset.val,+document.getElementById('sDuration').value||30,document.getElementById('sIntensity').value);}
 function selectIntensity(el,v){document.querySelectorAll('#sportModal .priority-btn').forEach(function(e){e.classList.remove('active');});el.classList.add('active');document.getElementById('sIntensity').value=v;}
-function eCal(tp,mn,it){var b={running:10,walking:4,cycling:7,swimming:9,gym:8,yoga:4,ball:8,other:6},m={low:.7,med:1,high:1.4};return Math.round((b[tp]||6)*(m[it]||1)*mn);}
+function eCal(tp,mn,it){var b={running:10,walking:4,cycling:7,swimming:9,gym:8,yoga:4,ball:8,other:6},m={low:.7,med:1,high:1.4};var base=b[tp]||6;customSportTypes.forEach(function(c){if(c.val===tp)base=6;});return Math.round(base*(m[it]||1)*mn);}
 function saveSport(){
   var dur=+document.getElementById('sDuration').value;if(!dur||dur<=0){toast('请填写运动时长');return;}
   var tp=document.getElementById('sSportType').value,it=document.getElementById('sIntensity').value,cl=+document.getElementById('sCalories').value||eCal(tp,dur,it);
-  sportLogs.push({id:genId(),type:tp,icon:document.getElementById('sSportIcon').value,duration:dur,calories:cl,intensity:it,date:document.getElementById('sSportDate').value,time:document.getElementById('sSportTime').value,note:document.getElementById('sSportNote').value});
+  var eid=document.getElementById('editSportId').value;
+  var rc={id:eid?+eid:genId(),type:tp,icon:document.getElementById('sSportIcon').value,duration:dur,calories:cl,intensity:it,date:document.getElementById('sSportDate').value,time:document.getElementById('sSportTime').value,note:document.getElementById('sSportNote').value};
+  if(eid)sportLogs=sportLogs.map(function(x){return x.id==+eid?rc:x;});else sportLogs.push(rc);
   save();closeModal('sportModal');toast('运动记录已保存 💪');renderHealthPage();
 }
-function openAddWeight(){document.getElementById('wWeight').value='';document.getElementById('wDate').value=today();document.getElementById('wNote').value='';openModal('weightModal');}
-function saveWeight(){
-  var w=+document.getElementById('wWeight').value;if(!w||w<20||w>300){toast('请输入合理的体重(20-300kg)');return;}
-  var d=document.getElementById('wDate').value,ei=weightLogs.findIndex(function(x){return x.date===d;}),rc={id:genId(),weight:w,date:d,note:document.getElementById('wNote').value};
-  if(ei>=0)weightLogs[ei]=rc;else weightLogs.push(rc);
-  document.getElementById('bmiWeight').value=w;localStorage.setItem('bmiWeight',w);
-  save();closeModal('weightModal');toast('体重已记录 ⚖️');renderHealthPage();calcBMI(false);
-}
 
+// ===================== 我的页 =====================
 function renderProfile(){document.getElementById('ps1').textContent=schedules.length;document.getElementById('ps2').textContent=sportLogs.length;document.getElementById('ps3').textContent=weightLogs.length;}
-function exportData(){var d={schedules:schedules,tasks:tasks,sportLogs:sportLogs,weightLogs:weightLogs,exportTime:new Date().toISOString()},b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='行程日历备份_'+today()+'.json';a.click();URL.revokeObjectURL(u);toast('数据已导出');}
-function importData(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){try{var d=JSON.parse(ev.target.result);if(d.schedules)schedules=d.schedules;if(d.tasks)tasks=d.tasks;if(d.sportLogs)sportLogs=d.sportLogs;if(d.weightLogs)weightLogs=d.weightLogs;save();toast('数据已导入 ✅');renderProfile();}catch(err){toast('文件格式错误');}};r.readAsText(f);}
-function clearAllData(){if(!confirm('确认清除全部数据？此操作不可恢复！'))return;schedules=[];tasks=[];sportLogs=[];weightLogs=[];localStorage.clear();save();toast('数据已清除');renderProfile();}
+function exportData(){var d={schedules:schedules,tasks:tasks,sportLogs:sportLogs,weightLogs:weightLogs,customSportTypes:customSportTypes,userHeight:userHeight,exportTime:new Date().toISOString()},b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='行程日历备份_'+today()+'.json';a.click();URL.revokeObjectURL(u);toast('数据已导出');}
+function importData(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){try{var d=JSON.parse(ev.target.result);if(d.schedules)schedules=d.schedules;if(d.tasks)tasks=d.tasks;if(d.sportLogs)sportLogs=d.sportLogs;if(d.weightLogs)weightLogs=d.weightLogs;if(d.customSportTypes)customSportTypes=d.customSportTypes;if(d.userHeight){userHeight=d.userHeight;localStorage.setItem('userHeight',userHeight);}save();toast('数据已导入 ✅');renderProfile();renderHealthPage();}catch(err){toast('文件格式错误');}};r.readAsText(f);}
+function clearAllData(){if(!confirm('确认清除全部数据？此操作不可恢复！'))return;schedules=[];tasks=[];sportLogs=[];weightLogs=[];customSportTypes=[];userHeight='';localStorage.removeItem('userHeight');localStorage.removeItem('customSportTypes');localStorage.clear();save();toast('数据已清除');renderProfile();}
 
+// ===================== 弹窗控制 =====================
 function openModal(id){document.getElementById(id).classList.add('show');}
 function closeModal(id){document.getElementById(id).classList.remove('show');}
 document.querySelectorAll('.modal-overlay').forEach(function(m){m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});});
 
+// ===================== 初始化 =====================
 initCal();
 renderHome();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./service-worker.js');}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./service-worker.js').catch(function(){});}
 </script>
 </body>
 </html>
