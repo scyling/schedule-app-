@@ -565,6 +565,8 @@ var pomoData=JSON.parse(localStorage.getItem('pomoData')||'{"todayCount":0,"tota
 var customSportTypes=JSON.parse(localStorage.getItem('customSportTypes')||'[]');
 // 身高（BMI计算用）
 var userHeight=localStorage.getItem('userHeight')||'';
+// 是否已初始化（用于判断是否写入演示数据，防止删除所有日程后被覆盖）
+var _appInitialized=localStorage.getItem('appInitialized_v1')==='true';
 
 function save(){localStorage.setItem('schedules_v2',JSON.stringify(schedules));localStorage.setItem('tasks_v2',JSON.stringify(tasks));localStorage.setItem('sportLogs',JSON.stringify(sportLogs));localStorage.setItem('weightLogs',JSON.stringify(weightLogs));localStorage.setItem('pomoData',JSON.stringify(pomoData));localStorage.setItem('customSportTypes',JSON.stringify(customSportTypes));}
 
@@ -577,12 +579,14 @@ function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.c
 function updateStatusTime(){}
 setInterval(updateStatusTime,1000);
 
-// 初始化演示数据（仅在首次空数据时）
-if(!schedules.length){
+// 初始化演示数据（仅在真正的首次使用时，自动演示用）
+if(!_appInitialized){
   var td=today(),tm=fmtDate(new Date(Date.now()+86400000));
-  schedules=[{id:1,title:'产品需求评审',date:td,time:'09:30',type:'work',location:'会议室A',color:'#6C63FF',priority:'high',repeat:'none',remind:'15min',note:''},{id:2,title:'午跑 5km',date:td,time:'12:00',type:'health',location:'公园',color:'#43D19E',priority:'med',repeat:'workday',remind:'none',note:''},{id:3,title:'团队周会',date:td,time:'14:00',type:'work',location:'线上',color:'#0096C7',priority:'high',repeat:'weekly',remind:'15min',note:''},{id:4,title:'读书 1小时',date:td,time:'21:00',type:'study',location:'',color:'FFB830',priority:'low',repeat:'daily',remind:'none',note:''},{id:5,title:'客户拜访',date:tm,time:'10:00',type:'work',location:'客户公司',color:'#FF6584',priority:'high',repeat:'none',remind:'1h',note:''},{id:6,title:'健身训练',date:tm,time:'18:30',type:'health',location:'健身房',color:'#43D19E',priority:'med',repeat:'weekly',remind:'none',note:''}];
+  schedules=[{id:1,title:'产品需求评审',date:td,time:'09:30',type:'work',location:'会议室A',color:'#6C63FF',priority:'high',repeat:'none',remind:'15min',note:''},{id:2,title:'午跑 5km',date:td,time:'12:00',type:'health',location:'公园',color:'#43D19E',priority:'med',repeat:'workday',remind:'none',note:''},{id:3,title:'团队周会',date:td,time:'14:00',type:'work',location:'线上',color:'#0096C7',priority:'high',repeat:'weekly',remind:'15min',note:''},{id:4,title:'读书 1小时',date:td,time:'21:00',type:'study',location:'',color:'#FFB830',priority:'low',repeat:'daily',remind:'none',note:''},{id:5,title:'客户拜访',date:tm,time:'10:00',type:'work',location:'客户公司',color:'#FF6584',priority:'high',repeat:'none',remind:'1h',note:''},{id:6,title:'健身训练',date:tm,time:'18:30',type:'health',location:'健身房',color:'#43D19E',priority:'med',repeat:'weekly',remind:'none',note:''}];
   tasks=[{id:1,name:'完成项目方案文档',done:false,priority:'high',estimate:60},{id:2,name:'回复邮件',done:false,priority:'med',estimate:30},{id:3,name:'整理桌面文件',done:true,priority:'low',estimate:15}];
   save();
+  localStorage.setItem('appInitialized_v1','true');
+  _appInitialized=true;
 }
 
 function matchesRepeat(s,dateStr){
