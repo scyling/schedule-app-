@@ -19,9 +19,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:28px;background:#1a1a2e;border-radius:0 0 18px 18px;z-index:100}
 .phone-screen{width:100%;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
 @media(max-width:430px){.phone-frame{width:100vw;height:100vh;border-radius:0;border:none;top:0;left:0;transform:none;box-shadow:none}.phone-notch{display:none}}
+/* 状态栏 - 已隐藏顶部留白
 .status-bar{height:44px;background:var(--card);display:flex;align-items:center;justify-content:flex-end;padding:8px 20px 0;flex-shrink:0}
 .status-bar .icons{display:flex;gap:6px;align-items:center}
 .status-bar .icons svg{width:16px;height:16px;fill:var(--text)}
+*/
 .pages{flex:1;overflow:hidden;position:relative}
 .page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(var(--nav-h)+12px);display:none;flex-direction:column;background:var(--bg);-webkit-overflow-scrolling:touch}
 .page.active{display:flex}
@@ -284,12 +286,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 <div class="phone-frame">
   <div class="phone-notch"></div>
   <div class="phone-screen">
+    <!-- 状态栏已隐藏
     <div class="status-bar">
       <div class="icons">
         <svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
         <svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
       </div>
     </div>
+    -->
     <div class="pages">
       <!-- ===== 首页 ===== -->
       <div class="page active" id="page-home">
@@ -450,8 +454,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
       <div class="nav-item" id="nav-profile" onclick="switchPage('page-profile')"><div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><span class="nav-label">我的</span></div>
     </div>
 
-    <!-- FAB - 新设计（白底+紫色描边+细线图标） -->
+    <!-- FAB 已隐藏（使用页面内的添加按钮）
     <div class="fab" id="mainFab" onclick="onFabClick()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+    -->
     <div class="toast" id="toast"></div>
 
     <!-- 弹窗：添加行程 -->
