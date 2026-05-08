@@ -209,7 +209,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 .bmi-height-row .hint{font-size:11px;color:var(--text3);flex:1;text-align:right}
 /* 体重趋势图 */
 .weight-chart{padding:12px 16px;background:var(--card);border-radius:var(--radius-sm);box-shadow:0 2px 8px rgba(0,0,0,0.05);margin:0 16px 14px;flex-shrink:0}
-.weight-chart-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.weight-chart-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.weight-chart-title span{flex-shrink:0}
+#weightFilterTabs{gap:4px;flex-wrap:wrap}
+.wf-tab{padding:3px 8px;border-radius:12px;border:1px solid var(--border);background:var(--bg);font-size:10px;color:var(--text2);cursor:pointer;transition:all 0.15s;font-family:inherit}
+.wf-tab.active{background:var(--primary-light);border-color:var(--primary);color:var(--primary);font-weight:600}
 .chart-svg{width:100%;height:80px;overflow:visible}
 /* 体重记录列表 */
 .weight-record-item{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:var(--radius-sm);padding:10px 14px;margin:0 16px 8px;box-shadow:0 2px 6px rgba(0,0,0,0.04);cursor:pointer}
@@ -408,7 +412,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
         </div>
         <!-- 体重趋势图 -->
         <div class="weight-chart" style="margin-top:14px">
-          <div class="weight-chart-title">体重趋势</div>
+          <div class="weight-chart-title">
+            <span>体重趋势</span>
+            <div style="display:flex;gap:4px" id="weightFilterTabs">
+              <button class="wf-tab active" onclick="setWeightFilter('week')">近一周</button>
+              <button class="wf-tab" onclick="setWeightFilter('month')">近一月</button>
+              <button class="wf-tab" onclick="setWeightFilter('quarter')">近三月</button>
+              <button class="wf-tab" onclick="setWeightFilter('year')">近一年</button>
+              <button class="wf-tab" onclick="setWeightFilter('all')">全部</button>
+            </div>
+          </div>
           <svg class="chart-svg" id="weightChartSvg" viewBox="0 0 320 80"></svg>
           <div style="text-align:center;font-size:11px;color:var(--text3);margin-top:4px" id="weightChartHint">暂无体重数据</div>
         </div>
@@ -418,7 +431,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
           <div id="weightRecordList"></div>
         </div>
         <div class="section" style="margin-top:2px">
-          <div class="section-title">今日运动<div style="display:flex;align-items:center;gap:10px"><span style="font-size:12px;color:var(--text3)" id="todaySportSummary">0 kcal</span><span class="more" onclick="openAddSport()">+ 记录</span></div></div>
+          <div class="section-title" style="cursor:pointer" onclick="openAddSport()">今日运动<div style="display:flex;align-items:center;gap:10px"><span style="font-size:12px;color:var(--text3)" id="todaySportSummary">0 kcal</span><span class="more">+ 记录</span></div></div>
           <div id="sportList"></div>
         </div>
       </div>
@@ -567,6 +580,8 @@ var customSportTypes=JSON.parse(localStorage.getItem('customSportTypes')||'[]');
 var userHeight=localStorage.getItem('userHeight')||'';
 // 是否已初始化（用于判断是否写入演示数据，防止删除所有日程后被覆盖）
 var _appInitialized=localStorage.getItem('appInitialized_v1')==='true';
+// 体重趋势图筛选（默认近一月）
+var _weightFilter='month';
 
 function save(){localStorage.setItem('schedules_v2',JSON.stringify(schedules));localStorage.setItem('tasks_v2',JSON.stringify(tasks));localStorage.setItem('sportLogs',JSON.stringify(sportLogs));localStorage.setItem('weightLogs',JSON.stringify(weightLogs));localStorage.setItem('pomoData',JSON.stringify(pomoData));localStorage.setItem('customSportTypes',JSON.stringify(customSportTypes));}
 
@@ -803,6 +818,7 @@ function renderHealthPage(){
   // 身高
   if(userHeight)document.getElementById('bmiHeightInput').value=userHeight;
   autoCalcBMI();
+  setWeightFilter(_weightFilter); // 同步筛选tab状态
   renderWeightChart();
   renderWeightRecordList();
   renderSportList();
@@ -862,21 +878,42 @@ function autoCalcBMI(){
   document.getElementById('bmiCircle').style.color=co;
 }
 
-// 体重趋势图 - 只显示每日最后一条
+// 体重趋势图筛选
+function setWeightFilter(f){
+  _weightFilter=f;
+  var labels={week:0,month:1,quarter:2,year:3,all:4};
+  document.querySelectorAll('#weightFilterTabs .wf-tab').forEach(function(t,i){t.classList.toggle('active',i===labels[f]);});
+  renderWeightChart();
+}
+
+// 体重趋势图 - 支持日期范围筛选
 function renderWeightChart(){
   var svg=document.getElementById('weightChartSvg'),hint=document.getElementById('weightChartHint');
   if(!weightLogs.length){svg.innerHTML='';hint.textContent='暂无体重数据，点击「+ 记录」添加';return;}
   hint.textContent='';
+  // 按筛选范围过滤
+  var now=new Date();
+  var cutoff;
+  switch(_weightFilter){
+    case 'week': cutoff=new Date(now.getTime()-7*86400000); break;
+    case 'month': cutoff=new Date(now.getTime()-30*86400000); break;
+    case 'quarter': cutoff=new Date(now.getTime()-90*86400000); break;
+    case 'year': cutoff=new Date(now.getTime()-365*86400000); break;
+    default: cutoff=new Date(0); // all
+  }
+  var filtered=weightLogs.filter(function(w){return parseDate(w.date)>=cutoff;});
+  if(!filtered.length){svg.innerHTML='';hint.textContent='该时间范围内暂无体重数据';return;}
   // 每日取最后一条
   var dayLast={};
-  [].concat(weightLogs).sort(function(a,b){return a.date.localeCompare(b.date);}).forEach(function(w){dayLast[w.date]=w;});
-  var arr=Object.keys(dayLast).sort().slice(-20).map(function(d){return dayLast[d];});
+  [].concat(filtered).sort(function(a,b){return a.date.localeCompare(b.date);}).forEach(function(w){dayLast[w.date]=w;});
+  var arr=Object.keys(dayLast).sort().slice(-60).map(function(d){return dayLast[d];}); // 最多60个点
   if(arr.length<1){svg.innerHTML='';hint.textContent='暂无体重数据';return;}
   var W=320,H=80,P=20,vs=arr.map(function(w){return +w.weight;}),mn=Math.min.apply(null,vs)-1,mx=Math.max.apply(null,vs)+1;
   var xs=arr.length>1?(W-P*2)/(arr.length-1):0;
   var pts=arr.map(function(w,i){return{x:P+i*xs,y:H-P-(+w.weight-mn)/(mx-mn||1)*(H-P*2)};});
   var pa=pts.map(function(p,i){return(i===0?'M':'L')+p.x+','+p.y;}).join(' ');
   var fi=pa+' L'+pts[pts.length-1].x+','+H+' L'+pts[0].x+','+H+' Z';
+  hint.textContent=arr.length+' 条数据 · '+arr[0].date+' 至 '+arr[arr.length-1].date;
   svg.innerHTML='<defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#43D19E" stop-opacity="0.3"/><stop offset="100%" stop-color="#43D19E" stop-opacity="0.02"/></linearGradient></defs>'+
     '<path d="'+fi+'" fill="url(#wg)"/>'+
     '<path d="'+pa+'" fill="none" stroke="#43D19E" stroke-width="2"/>'+
