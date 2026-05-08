@@ -344,6 +344,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
           <span class="day-title" id="dayTitle">今天的行程</span>
           <div class="add-btn" onclick="openAddSchedule()"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>添加</div>
         </div>
+        <!-- 日程筛选栏 -->
+        <div style="display:flex;gap:6px;padding:8px 16px;flex-wrap:wrap">
+          <button class="wf-tab active" onclick="setScheduleFilter('today_all')" id="sfBtn1">全部</button>
+          <button class="wf-tab" onclick="setScheduleFilter('today_undone')" id="sfBtn2">未完成</button>
+          <button class="wf-tab" onclick="setScheduleFilter('today_done')" id="sfBtn3">已完成</button>
+        </div>
         <div style="padding:0 16px" id="calDayScheduleList"></div>
       </div>
 
@@ -374,12 +380,20 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
         </div>
         <div class="time-stats-grid">
           <div class="time-stat-card"><div class="ts-icon" style="background:var(--primary)"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L11 13.5V7h1.5v5.75l4.5 2.67-1 1.58z"/></svg></div><div class="ts-val" id="pomoTodayCount">0</div><div class="ts-lbl">今日番茄数</div></div>
-          <div class="time-stat-card"><div class="ts-icon" style="background:var(--success)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="ts-val" id="taskDoneCount">0</div><div class="ts-lbl">已完成任务</div></div>
-          <div class="time-stat-card"><div class="ts-icon" style="background:var(--warning)"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div><div class="ts-val" id="taskTotalCount">0</div><div class="ts-lbl">全部任务</div></div>
           <div class="time-stat-card"><div class="ts-icon" style="background:var(--accent)"><svg viewBox="0 0 24 24"><path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m.5 5H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg></div><div class="ts-val" id="pomoFocusMin">0</div><div class="ts-lbl">专注分钟</div></div>
         </div>
         <div class="section">
           <div class="section-title">任务清单 <span class="more" onclick="openAddTask()">+ 添加</span></div>
+          <!-- 任务筛选栏 -->
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
+            <div style="display:flex;gap:4px" id="taskStatusFilter">
+              <button class="wf-tab active" onclick="setTaskFilter('today')">今日</button>
+              <button class="wf-tab" onclick="setTaskFilter('undone')">未完成</button>
+              <button class="wf-tab" onclick="setTaskFilter('done')">已完成</button>
+              <button class="wf-tab" onclick="setTaskFilter('all')">全部</button>
+            </div>
+            <input type="date" id="taskDateFilter" style="padding:5px 8px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);font-size:12px;color:var(--text);outline:none;font-family:inherit" onchange="setTaskDateFilter(this.value)">
+          </div>
           <div id="taskList" style="padding-bottom:8px"></div>
         </div>
       </div>
@@ -431,7 +445,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
           <div id="weightRecordList"></div>
         </div>
         <div class="section" style="margin-top:2px">
-          <div class="section-title" style="cursor:pointer" onclick="openAddSport()">今日运动<div style="display:flex;align-items:center;gap:10px"><span style="font-size:12px;color:var(--text3)" id="todaySportSummary">0 kcal</span><span class="more" onclick="event.stopPropagation();openAddSport()">+ 记录</span></div></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <span style="font-size:15px;font-weight:700;color:var(--text)">今日运动</span>
+            <span id="todaySportSummary" style="font-size:12px;color:var(--text3);margin-right:8px">0 kcal</span>
+            <button onclick="openAddSport()" style="padding:4px 12px;border-radius:14px;border:none;background:var(--primary);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">+ 记录</button>
+          </div>
           <div id="sportList"></div>
         </div>
       </div>
@@ -509,6 +527,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
         <div class="sheet-title"><span>记录运动</span><div class="sheet-close" onclick="closeModal('sportModal')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div></div>
         <div class="sheet-body">
           <input type="hidden" id="editSportId">
+          <input type="hidden" id="sSportType" value="running">
+          <input type="hidden" id="sSportIcon" value="🏃">
           <div class="form-group"><div class="form-label">运动类型</div>
             <div style="display:flex;gap:8px;flex-wrap:wrap" id="sportTypeOpts"></div>
           </div>
@@ -558,7 +578,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
         <div class="sheet-title"><span>添加任务</span><div class="sheet-close" onclick="closeModal('taskModal')"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div></div>
         <div class="sheet-body">
           <div class="form-group"><div class="form-label">任务名称 *</div><input class="form-input" id="tName" placeholder="任务名称"></div>
-          <div class="form-row"><div class="form-group"><div class="form-label">预计时间</div><input class="form-input" id="tEstimate" type="number" placeholder="25(分钟)"></div><div class="form-group"><div class="form-label">优先级</div><select class="form-select" id="tPriority"><option value="low">🟢 低</option><option value="med" selected>🟡 中</option><option value="high">🔴 高</option></select></div></div>
+          <div class="form-row"><div class="form-group"><div class="form-label">日期</div><input class="form-input" id="tDate" type="date"></div><div class="form-group"><div class="form-label">预计时间</div><input class="form-input" id="tEstimate" type="number" placeholder="25(分钟)"></div></div>
+          <div class="form-group"><div class="form-label">优先级</div><div style="display:flex;gap:8px"><div class="priority-btn p1" onclick="selectTaskPriority(this,'low')"><span class="p-icon">🟢</span>低</div><div class="priority-btn p2 active" onclick="selectTaskPriority(this,'med')"><span class="p-icon">🟡</span>中</div><div class="priority-btn p3" onclick="selectTaskPriority(this,'high')"><span class="p-icon">🔴</span>高</div></div><input type="hidden" id="tPriority" value="med"></div>
           <button class="btn-save" onclick="saveTask()">添加任务</button>
         </div>
       </div>
@@ -570,6 +591,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'PingFang
 <script>
 // ===================== 数据层 =====================
 var schedules=JSON.parse(localStorage.getItem('schedules_v2')||'[]');
+// 确保旧数据有done字段
+schedules.forEach(function(s){if(typeof s.done==='undefined')s.done=false;});
 var tasks=JSON.parse(localStorage.getItem('tasks_v2')||'[]');
 var sportLogs=JSON.parse(localStorage.getItem('sportLogs')||'[]');
 var weightLogs=JSON.parse(localStorage.getItem('weightLogs')||'[]');
@@ -582,6 +605,21 @@ var userHeight=localStorage.getItem('userHeight')||'';
 var _appInitialized=localStorage.getItem('appInitialized_v1')==='true';
 // 体重趋势图筛选（默认近一月）
 var _weightFilter='month';
+// 任务筛选状态
+var _taskFilter='today'; // today/undone/done/all
+var _taskDateFilter=''; // 日期筛选
+// 日程筛选状态
+var _scheduleFilter='today'; // today_all/today_undone/today_done/all_undone/all_done
+
+// 数据迁移：为旧的日程和任务添加 done 字段，为旧的重复任务添加 doneDates 字段
+schedules.forEach(function(s){
+  if(typeof s.done==='undefined')s.done=false;
+  // 重复任务需要按日期标记完成状态
+  if(s.repeat&&s.repeat!=='none'&&typeof s.doneDates==='undefined'){
+    s.doneDates={};
+  }
+});
+tasks.forEach(function(t){if(typeof t.done==='undefined')t.done=false;});
 
 function save(){localStorage.setItem('schedules_v2',JSON.stringify(schedules));localStorage.setItem('tasks_v2',JSON.stringify(tasks));localStorage.setItem('sportLogs',JSON.stringify(sportLogs));localStorage.setItem('weightLogs',JSON.stringify(weightLogs));localStorage.setItem('pomoData',JSON.stringify(pomoData));localStorage.setItem('customSportTypes',JSON.stringify(customSportTypes));}
 
@@ -597,7 +635,7 @@ setInterval(updateStatusTime,1000);
 // 初始化演示数据（仅在真正的首次使用时，自动演示用）
 if(!_appInitialized){
   var td=today(),tm=fmtDate(new Date(Date.now()+86400000));
-  schedules=[{id:1,title:'产品需求评审',date:td,time:'09:30',type:'work',location:'会议室A',color:'#6C63FF',priority:'high',repeat:'none',remind:'15min',note:''},{id:2,title:'午跑 5km',date:td,time:'12:00',type:'health',location:'公园',color:'#43D19E',priority:'med',repeat:'workday',remind:'none',note:''},{id:3,title:'团队周会',date:td,time:'14:00',type:'work',location:'线上',color:'#0096C7',priority:'high',repeat:'weekly',remind:'15min',note:''},{id:4,title:'读书 1小时',date:td,time:'21:00',type:'study',location:'',color:'#FFB830',priority:'low',repeat:'daily',remind:'none',note:''},{id:5,title:'客户拜访',date:tm,time:'10:00',type:'work',location:'客户公司',color:'#FF6584',priority:'high',repeat:'none',remind:'1h',note:''},{id:6,title:'健身训练',date:tm,time:'18:30',type:'health',location:'健身房',color:'#43D19E',priority:'med',repeat:'weekly',remind:'none',note:''}];
+  schedules=[{id:1,title:'产品需求评审',date:td,time:'09:30',type:'work',location:'会议室A',color:'#6C63FF',priority:'high',repeat:'none',remind:'15min',note:'',done:false},{id:2,title:'午跑 5km',date:td,time:'12:00',type:'health',location:'公园',color:'#43D19E',priority:'med',repeat:'workday',remind:'none',note:'',done:true},{id:3,title:'团队周会',date:td,time:'14:00',type:'work',location:'线上',color:'#0096C7',priority:'high',repeat:'weekly',remind:'15min',note:'',done:false},{id:4,title:'读书 1小时',date:td,time:'21:00',type:'study',location:'',color:'#FFB830',priority:'low',repeat:'daily',remind:'none',note:'',done:false},{id:5,title:'客户拜访',date:tm,time:'10:00',type:'work',location:'客户公司',color:'#FF6584',priority:'high',repeat:'none',remind:'1h',note:'',done:false},{id:6,title:'健身训练',date:tm,time:'18:30',type:'health',location:'健身房',color:'#43D19E',priority:'med',repeat:'weekly',remind:'none',note:'',done:false}];
   tasks=[{id:1,name:'完成项目方案文档',done:false,priority:'high',estimate:60},{id:2,name:'回复邮件',done:false,priority:'med',estimate:30},{id:3,name:'整理桌面文件',done:true,priority:'low',estimate:15}];
   save();
   localStorage.setItem('appInitialized_v1','true');
@@ -613,7 +651,28 @@ function matchesRepeat(s,dateStr){
   switch(s.repeat){case 'daily':return true;case 'workday':return dw>=1&&dw<=5;case 'weekly':return base.getDay()===dw;case 'monthly':return base.getDate()===target.getDate();case 'yearly':return base.getMonth()===target.getMonth()&&base.getDate()===target.getDate();}
   return false;
 }
-function getSchedulesByDate(d){return schedules.filter(function(s){return matchesRepeat(s,d);}).sort(function(a,b){return(a.time||'00:00').localeCompare(b.time||'00:00');});}
+// 判断日程在指定日期是否已完成
+function isScheduleDone(s, d) {
+  if(s.repeat && s.repeat !== 'none') {
+    return s.doneDates && s.doneDates[d];
+  }
+  return s.done;
+}
+
+function getSchedulesByDate(d,filter){
+  var list=schedules.filter(function(s){return matchesRepeat(s,d);});
+  // 根据筛选条件过滤
+  if(filter==='today_undone')list=list.filter(function(s){return !isScheduleDone(s,d);});
+  else if(filter==='today_done')list=list.filter(function(s){return isScheduleDone(s,d);});
+  else if(filter==='all_undone')list=schedules.filter(function(s){return !s.done;});
+  else if(filter==='all_done')list=schedules.filter(function(s){return s.done;});
+  // 排序：未完成的在前，按时间排序；已完成的在后
+  return list.sort(function(a,b){
+    var aDone=isScheduleDone(a,d),bDone=isScheduleDone(b,d);
+    if(aDone!==bDone)return aDone?1:-1;
+    return(a.time||'00:00').localeCompare(b.time||'00:00');
+  });
+}
 function typeEmoji(t){return{work:'💼',health:'🏃',social:'🎉',travel:'✈️',study:'📚',life:'🏠',other:'📌'}[t]||'📌';}
 function typeName(t){return{work:'工作',health:'健康',social:'社交',travel:'出行',study:'学习',life:'生活',other:'其他'}[t]||'其他';}
 function repeatMap(r){return{daily:'每天',workday:'工作日',weekly:'每周',monthly:'每月',yearly:'每年',none:''}[r]||'';}
@@ -641,11 +700,13 @@ function renderHome(){
   var h=d.getHours(),g=h<6?'深夜好':h<9?'早上好':h<12?'上午好':h<14?'中午好':h<18?'下午好':'晚上好';
   document.getElementById('homeGreeting').textContent=g+'，欢迎回来 👋';
   document.getElementById('homeDate').textContent=d.getFullYear()+'年'+months[d.getMonth()]+d.getDate()+'日 '+wdays[d.getDay()];
-  var ts=today(),tSch=getSchedulesByDate(ts);
+  var ts=today(),tSch=getSchedulesByDate(ts,_scheduleFilter==='today_all'||_scheduleFilter==='today_undone'||_scheduleFilter==='today_done'?undefined:_scheduleFilter);
+  // 今日未完成任务数统计（含其他日期的未完成）
+  var pendingCount=schedules.filter(function(s){return !s.done;}).length;
   document.getElementById('homeTodayCount').textContent=tSch.length;
-  document.getElementById('homePendingCount').textContent=tasks.filter(function(t){return !t.done;}).length;
+  document.getElementById('homePendingCount').textContent=pendingCount;
   document.getElementById('homeSportToday').textContent=sportLogs.filter(function(s){return s.date===ts;}).reduce(function(a,c){return a+(+c.duration||0);},0);
-  var dn=tasks.filter(function(t){return t.done;}).length,tot=tasks.length||1,pct=Math.round(dn/tot*100);
+  var dn=schedules.filter(function(s){return s.done;}).length,tot=schedules.length||1,pct=Math.round(dn/tot*100);
   document.getElementById('homeProgressVal').textContent=pct+'%';document.getElementById('homeProgressBar').style.width=pct+'%';
   var el=document.getElementById('homeScheduleList');
   el.innerHTML=tSch.length?tSch.map(function(s){return renderScheduleItem(s,ts);}).join(''):'<div class="empty-day"><span class="emoji">🌟</span>今天暂无行程，去添加吧！</div>';
@@ -653,7 +714,9 @@ function renderHome(){
 function renderScheduleItem(s,ds){
   var rL=s.repeat&&s.repeat!=='none'?'<span class="repeat-tag">🔁 '+repeatMap(s.repeat)+'</span>':'';
   var pC=s.priority==='high'?'var(--danger)':s.priority==='med'?'var(--warning)':'var(--success)';
-  return '<div class="schedule-item">'+'<div class="color-bar" style="background:'+s.color+'"></div>'+'<div class="content" onclick="openDetail(\''+s.id+'\',\''+ds+'\')"><div class="title">'+s.title+'</div>'+'<div class="meta">'+(s.time?'<span class="time">'+s.time+'</span>':'')+'<span class="tag">'+typeEmoji(s.type)+' '+typeName(s.type)+'</span>'+rL+'</div></div>'+'<div class="right-part"><div class="status-dot" style="background:'+pC+'"></div><span class="del-btn" onclick="event.stopPropagation();deleteSchedule(\''+s.id+'\')" title="删除">🗑</span></div></div>';
+  // 判断完成状态：重复任务按日期判断，非重复任务按done字段
+  var isDone=s.repeat&&s.repeat!=='none'?(s.doneDates&&s.doneDates[ds]):s.done;
+  return '<div class="schedule-item" style="'+(isDone?'opacity:0.6':'')+'">'+'<div class="color-bar" style="background:'+s.color+'"></div>'+'<div class="content" onclick="openDetail(\''+s.id+'\',\''+ds+'\')"><div class="title" style="'+(isDone?'text-decoration:line-through;color:var(--text3)':'')+'">'+s.title+'</div>'+'<div class="meta">'+(s.time?'<span class="time">'+s.time+'</span>':'')+'<span class="tag">'+typeEmoji(s.type)+' '+typeName(s.type)+'</span>'+rL+'</div></div>'+'<div class="right-part"><div class="task-check '+(isDone?'done':'')+'" style="margin-right:4px" onclick="event.stopPropagation();toggleScheduleDone(\''+s.id+'\',\''+ds+'\')"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="del-btn" onclick="event.stopPropagation();deleteSchedule(\''+s.id+'\')" title="删除">🗑</span></div></div>';
 }
 
 // ===================== 日历页 =====================
@@ -679,7 +742,8 @@ function selectCalDay(d){selectedDate=d;renderCalendar();}
 function renderDaySchedules(d){
   var wd=['周日','周一','周二','周三','周四','周五','周六'],dd=parseDate(d);
   document.getElementById('dayTitle').textContent=d===today()?'今天 '+wd[dd.getDay()]:d.slice(5).replace('-','月')+'日 '+wd[dd.getDay()];
-  var list=getSchedulesByDate(d),el=document.getElementById('calDayScheduleList');
+  var list=getSchedulesByDate(d,_scheduleFilter);
+  var el=document.getElementById('calDayScheduleList');
   el.innerHTML=list.length?list.map(function(s){return renderScheduleItem(s,d);}).join(''):'<div class="empty-day"><span class="emoji">📅</span>这天暂无行程</div>';
 }
 
@@ -721,6 +785,24 @@ function deleteSchedule(id){
   if(currentPage==='page-home')renderHome();
   if(currentPage==='page-cal')renderCalendar();
 }
+function toggleScheduleDone(id, date){
+  var s=schedules.find(function(x){return x.id==id;});
+  if(s){
+    if(s.repeat&&s.repeat!=='none'){
+      // 重复任务：只标记指定日期
+      if(!s.doneDates)s.doneDates={};
+      s.doneDates[date]=!s.doneDates[date];
+    } else {
+      // 非重复任务：直接标记
+      s.done=!s.done;
+    }
+    save();
+    var isDone=s.repeat&&s.repeat!=='none'?(s.doneDates&&s.doneDates[date]):s.done;
+    toast(isDone?'行程已完成 ✓':'已取消完成');
+    if(currentPage==='page-home')renderHome();
+    if(currentPage==='page-cal')renderCalendar();
+  }
+}
 
 // 详情页删除
 function deleteScheduleFromDetail(){
@@ -750,7 +832,8 @@ function editScheduleFromDetail(){
 function saveSchedule(){
   var t=document.getElementById('sTitle').value.trim();if(!t){toast('请填写行程标题');return;}
   var id=document.getElementById('editScheduleId').value;
-  var s={id:id?+id:genId(),title:t,date:document.getElementById('sDate').value,time:document.getElementById('sTime').value,type:document.getElementById('sType').value,location:document.getElementById('sLocation').value,repeat:document.getElementById('sRepeat').value,priority:document.getElementById('sPriority').value,color:document.getElementById('sColor').value,remind:document.getElementById('sRemind').value,note:document.getElementById('sNote').value};
+  var existing=id?schedules.find(function(x){return x.id==id;}):null;
+  var s={id:id?+id:genId(),title:t,date:document.getElementById('sDate').value,time:document.getElementById('sTime').value,type:document.getElementById('sType').value,location:document.getElementById('sLocation').value,repeat:document.getElementById('sRepeat').value,priority:document.getElementById('sPriority').value,color:document.getElementById('sColor').value,remind:document.getElementById('sRemind').value,note:document.getElementById('sNote').value,done:existing?existing.done:false};
   if(id)schedules=schedules.map(function(x){return x.id==id?s:x;});else schedules.push(s);
   save();closeModal('scheduleModal');toast(id?'行程已更新':'行程已添加 🎉');
   if(currentPage==='page-home')renderHome();if(currentPage==='page-cal')renderCalendar();
@@ -759,6 +842,14 @@ function selectRepeat(el){document.querySelectorAll('.repeat-opts .repeat-opt').
 function selectPriority(el,v){document.querySelectorAll('.priority-group .priority-btn').forEach(function(e){e.classList.remove('active');});el.classList.add('active');document.getElementById('sPriority').value=v;}
 function selectColor(el){document.querySelectorAll('.color-dot').forEach(function(e){e.classList.remove('selected');});el.classList.add('selected');document.getElementById('sColor').value=el.dataset.c;}
 function selectRemind(el){document.querySelectorAll('.remind-opt').forEach(function(e){e.classList.remove('active');});el.classList.add('active');document.getElementById('sRemind').value=el.dataset.val;}
+function setScheduleFilter(f){
+  _scheduleFilter=f;
+  document.getElementById('sfBtn1').classList.toggle('active',f==='today_all');
+  document.getElementById('sfBtn2').classList.toggle('active',f==='today_undone');
+  document.getElementById('sfBtn3').classList.toggle('active',f==='today_done');
+  if(currentPage==='page-cal')renderDaySchedules(selectedDate);
+  if(currentPage==='page-home')renderHome();
+}
 
 // ===================== 专注计时页 =====================
 var pomoInterval=null,pomoRunning=false,pomoTotalSec=1500,pomoRemain=1500,pomoMode='工作';
@@ -772,15 +863,41 @@ function updRing(){var p=((pomoTotalSec-pomoRemain)/pomoTotalSec*100).toFixed(1)
 function renderTimePage(){
   var d=today();if(pomoData.lastDate!==d){pomoData.todayCount=0;pomoData.totalMin=0;}
   document.getElementById('pomoTodayCount').textContent=pomoData.todayCount||0;document.getElementById('pomoFocusMin').textContent=pomoData.totalMin||0;
-  var dn=tasks.filter(function(t){return t.done;}).length;document.getElementById('taskDoneCount').textContent=dn;document.getElementById('taskTotalCount').textContent=tasks.length;
+  // 同步筛选UI状态
+  var filterLabels={today:0,undone:1,done:2,all:3};
+  document.querySelectorAll('#taskStatusFilter .wf-tab').forEach(function(t,i){t.classList.toggle('active',i===filterLabels[_taskFilter]);});
+  if(_taskDateFilter)document.getElementById('taskDateFilter').value=_taskDateFilter;
+  // 根据筛选条件过滤任务
+  var td=today();
+  var filtered=[];
+  if(_taskFilter==='today'){
+    // 今日任务：当日所有任务 + 所有未完成任务（去重）
+    var todayTasks=tasks.filter(function(t){return !t.date||t.date===td;});
+    var undoneTasks=tasks.filter(function(t){return !t.done&&(t.date&&t.date!==td);});
+    filtered=[].concat(todayTasks,undoneTasks);
+  } else {
+    filtered=tasks.filter(function(t){
+      var matchStatus=true;
+      switch(_taskFilter){
+        case 'undone': matchStatus=!t.done; break;
+        case 'done': matchStatus=t.done; break;
+        case 'all': matchStatus=true; break;
+      }
+      var matchDate=!_taskDateFilter||t.date===_taskDateFilter;
+      return matchStatus&&matchDate;
+    });
+  }
   var el=document.getElementById('taskList');
-  if(!tasks.length){el.innerHTML='<div class="empty-day"><span class="emoji">✅</span>暂无任务</div>';return;}
-  el.innerHTML=tasks.map(function(t){var pl={high:'🔴高',med:'🟡中',low:'🟢低'}[t.priority||'med'];return '<div class="task-item"><div class="task-check '+(t.done?'done':'')+'" onclick="toggleTask('+t.id+')"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="task-info"><div class="t-name '+(t.done?'done-text':'')+'">'+t.name+'</div>'+(t.estimate?'<div class="t-time">⏱ 预计'+t.estimate+'分钟</div>':'')+'</div><span class="task-priority '+(t.priority||'med')+'">'+pl+'</span><span class="task-del" onclick="deleteTask('+t.id+')" title="删除">🗑</span></div>';}).join('');
+  if(!filtered.length){el.innerHTML='<div class="empty-day"><span class="emoji">✅</span>暂无任务</div>';return;}
+  el.innerHTML=filtered.map(function(t){var pl={high:'🔴高',med:'🟡中',low:'🟢低'}[t.priority||'med'];return '<div class="task-item"><div class="task-check '+(t.done?'done':'')+'" onclick="toggleTask('+t.id+')"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div class="task-info"><div class="t-name '+(t.done?'done-text':'')+'">'+t.name+'</div><div class="t-time">'+(t.date&&t.date!==td?'📅 '+t.date+' · ':'')+'⏱ 预计'+(t.estimate||0)+'分钟</div></div><span class="task-priority '+(t.priority||'med')+'">'+pl+'</span><span class="task-del" onclick="deleteTask('+t.id+')" title="删除">🗑</span></div>';}).join('');
 }
 function toggleTask(id){var t=tasks.find(function(x){return x.id===id;});if(t){t.done=!t.done;save();renderTimePage();}}
 function deleteTask(id){tasks=tasks.filter(function(t){return t.id!==id;});save();renderTimePage();toast('任务已删除');}
-function openAddTask(){document.getElementById('tName').value='';document.getElementById('tEstimate').value='';document.getElementById('tPriority').value='med';openModal('taskModal');}
-function saveTask(){var n=document.getElementById('tName').value.trim();if(!n){toast('请填写任务名称');return;}tasks.push({id:genId(),name:n,priority:document.getElementById('tPriority').value,estimate:+document.getElementById('tEstimate').value||0,done:false});save();closeModal('taskModal');renderTimePage();toast('任务已添加');}
+function setTaskFilter(f){_taskFilter=f;renderTimePage();}
+function setTaskDateFilter(d){_taskDateFilter=d;renderTimePage();}
+function openAddTask(){document.getElementById('tName').value='';document.getElementById('tDate').value=today();document.getElementById('tEstimate').value='';document.getElementById('tPriority').value='med';document.querySelectorAll('#taskModal .priority-btn').forEach(function(e){e.classList.remove('active');});document.querySelector('#taskModal .priority-btn.p2').classList.add('active');openModal('taskModal');}
+function selectTaskPriority(el,v){document.querySelectorAll('#taskModal .priority-btn').forEach(function(e){e.classList.remove('active');});el.classList.add('active');document.getElementById('tPriority').value=v;}
+function saveTask(){var n=document.getElementById('tName').value.trim();if(!n){toast('请填写任务名称');return;}tasks.push({id:genId(),name:n,priority:document.getElementById('tPriority').value,estimate:+document.getElementById('tEstimate').value||0,done:false,date:document.getElementById('tDate').value||today()});save();closeModal('taskModal');renderTimePage();toast('任务已添加');}
 
 // ===================== 健康页 =====================
 function getAllSportTypes(){
@@ -968,13 +1085,15 @@ function sName(t){var all=getAllSportTypes();var f=all.find(function(a){return a
 function iLbl(i){return{low:'轻度',med:'中度',high:'高强度'}[i]||'中度';}
 function deleteSport(id){if(!confirm('确认删除？'))return;sportLogs=sportLogs.filter(function(s){return s.id!==id;});save();renderHealthPage();toast('已删除');}
 function openAddSport(){
+  var modal=document.getElementById('sportModal');
+  if(!modal){console.error('sportModal不存在');return;}
   document.getElementById('editSportId').value='';document.getElementById('sSportDate').value=today();
   var n=new Date();document.getElementById('sSportTime').value=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
   document.getElementById('sDuration').value='';document.getElementById('sCalories').value='';document.getElementById('sSportNote').value='';
   document.getElementById('sSportType').value='running';document.getElementById('sSportIcon').value='🏃';document.getElementById('sIntensity').value='med';
   renderSportTypeOpts('running');
   document.querySelectorAll('#sportModal .priority-btn').forEach(function(e){e.classList.remove('active');});document.querySelector('#sportModal .priority-btn.p2').classList.add('active');
-  openModal('sportModal');
+  modal.classList.add('show');
 }
 function selectSportType(el){document.querySelectorAll('#sportTypeOpts .repeat-opt').forEach(function(e){e.classList.remove('active');});el.classList.add('active');document.getElementById('sSportType').value=el.dataset.val;document.getElementById('sSportIcon').value=el.dataset.icon||'🏃';document.getElementById('sCalories').value=eCal(el.dataset.val,+document.getElementById('sDuration').value||30,document.getElementById('sIntensity').value);}
 function selectIntensity(el,v){document.querySelectorAll('#sportModal .priority-btn').forEach(function(e){e.classList.remove('active');});el.classList.add('active');document.getElementById('sIntensity').value=v;}
